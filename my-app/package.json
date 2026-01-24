@@ -1,0 +1,55 @@
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "keywords": [
+    "howler",
+    "howler.js",
+    "audio",
+    "sound",
+    "web audio",
+    "webaudio",
+    "browser",
+    "html5",
+    "html5 audio",
+    "audio sprite",
+    "audiosprite"
+  ],
+  "scripts": {
+    "build": "webpack",
+    "start": " node server.js",
+    "watch": "webpack --watch",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@types/howler": "^2.2.12",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.4",
+    "express": "^4.22.1",
+    "howler": "^2.2.4",
+    "jsonwebtoken": "^9.0.2",
+    "navigo": "^8.11.1",
+    "redom": "^4.3.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "css-loader": "^7.1.2",
+    "filemanager-webpack-plugin": "^9.0.1",
+    "html-webpack-plugin": "^5.6.6",
+    "parcel": "^2.16.3",
+    "sass": "^1.97.2",
+    "sass-loader": "^16.0.6",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.3",
+    "webpack": "^5.104.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-middleware": "^7.4.5",
+    "webpack-dev-server": "^5.2.3",
+    "webpack-hot-middleware": "^2.26.1"
+  },
+  "main": "routes.js"
+}
