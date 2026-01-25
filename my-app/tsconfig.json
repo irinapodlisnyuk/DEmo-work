@@ -8,7 +8,9 @@
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node",
-    "strict": true
+    "strict": true,            // Разрешает импорт JavaScript
+    "checkJs": false,           // (Опционально) не проверять ошибки внутри JS
+    "esModuleInterop": true
   },
   "files": ["global.d.ts"],
    //"include": ["./src/**/*"]

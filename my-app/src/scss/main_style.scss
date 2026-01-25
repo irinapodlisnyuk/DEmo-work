@@ -1,0 +1,22 @@
+/* ------------------------------------ */
+@use "./global/normalize.scss";
+@use "./global/variables";
+@use "./global/mixins";
+@use "./global/fonts";
+@use "./global/reboot";
+@use "./global/container";
+@use "./global/visually-hidden";
+
+/* Blocks */
+/* ------------------------------------ */
+
+@use "./blocks/header";
+@use "./blocks/custom-input";
+@use "./blocks/btn";
+@use "./blocks/catalog";
+@use "./blocks/catalog__form";
+@use "./blocks/custom-radio";
+@use "./blocks/catalog__table";
+@use "./blocks/catalog__pagination";
+@use "./blocks/user-card";
+@use "./blocks/player";

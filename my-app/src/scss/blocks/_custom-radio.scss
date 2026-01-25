@@ -1,3 +1,7 @@
+@use "../global/mixins" as *;
+@use "../global/variables" as *;
+
+
 .custom-radio {
   .custom-radio__field:checked + .custom-radio__label {
     background: $color-white;

@@ -1,3 +1,6 @@
+@use "../global/mixins" as *;
+@use "../global/variables" as *;
+
 .catalog__form {
   //height: 100vh;
   padding: 37px 0 0;
