@@ -13,5 +13,5 @@
     "esModuleInterop": true
   },
   "files": ["global.d.ts"],
-   //"include": ["./src/**/*"]
+   "include": ["./src/**/*"]
 }

@@ -1,5 +1,7 @@
 import { el, setAttr, text } from "redom";
 import { svg, mount } from "redom";
+import spritePath from "../images/sprite.svg";
+import userPhoto from '../images/foto-user-dekstop.png';
 
 export function cardUser() {
   const headerCard: HTMLElement = document.querySelector(
@@ -32,7 +34,10 @@ export function cardUser() {
     className: "user-card__title",
   });
 
-  const h3El = el("h3", "Данный раздел находится в разработке. Спасибо за понимание!!!");
+  const h3El = el(
+    "h3",
+    "Данный раздел находится в разработке. Спасибо за понимание!!!",
+  );
   setAttr(h3El, {
     className: "user-card__error",
   });
@@ -54,29 +59,43 @@ export function cardUser() {
     className: "user-card__buttonRedactionEl",
   });
 
-  const svgEl = svg(
-    "svg",
-    svg("use", { xlink: { href: "./images/sprite.svg#icon-close" } }),
-  );
-  setAttr(svgEl, {
-    className: "user-card__icon",
-    wedth: "25",
-    height: "24", // You could also just use 'class'
-  });
+const closeId = 'icon-close';
+  const svgEl = svg("svg", 
+  { 
+    class: "close-icon", 
+    width: "24", 
+    height: "24" 
+  },
+  svg("use", { 
+    href: `${spritePath}#${closeId}` // Вставляем путь из переменной
+  })
+);
+
+  // const svgEl = svg(
+  //   "svg",
+  //   svg("use", {
+  //     href: `${spritePath}#icon-close`,
+  //   }),
+  // );
+  // setAttr(svgEl, {
+  //   className: "user-card__icon",
+  //   wedth: "25",
+  //   height: "24", // You could also just use 'class'
+  // });
 
   const imgUserEl = el("img");
   setAttr(imgUserEl, {
     className: "user-card__img",
     wedth: "25",
     height: "25",
-    src: "../images/foto-user-dekstop.png",
+    src: userPhoto,
     // You could also just use 'class'
   });
 
   bottomEl.appendChild(buttonRedactionEl);
   bottomEl.appendChild(buttonExitEl);
   buttonEl.append(svgEl);
-  headingEl.append(buttonEl,hEl, imgUserEl);
+  headingEl.append(buttonEl, hEl, imgUserEl);
   topEl.appendChild(h3El);
   cardEl.appendChild(headingEl);
   cardEl.appendChild(topEl);
