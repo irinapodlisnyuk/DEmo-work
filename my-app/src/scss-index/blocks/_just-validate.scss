@@ -1,0 +1,13 @@
+/* Класс, который JustValidate автоматически создает для текста ошибки */
+@use "../global/variables" as *;
+.just-validate-error-label {
+  color: #ff4d4d;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block; /* Чтобы ошибка была на новой строке под инпутом */
+}
+
+/* Стилизация самого инпута при ошибке */
+.just-validate-error-field {
+  border: 1px solid #ff4d4d !important;
+}

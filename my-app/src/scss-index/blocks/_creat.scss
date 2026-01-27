@@ -46,7 +46,7 @@
     justify-content: center;
     gap: 20px;
   }
-
+  
   &__btn {
     background-color: $color-burnt-orange;
     color: white;
@@ -78,9 +78,8 @@
     color: $color-burnt-orange;
   }
 }
-
-.form-login,
-.form-registration {
+.form__reg,
+.form__login {
   display: flex;
   flex-direction: column;
   gap: 20px;

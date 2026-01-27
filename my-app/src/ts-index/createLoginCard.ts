@@ -1,6 +1,7 @@
 import { navigate } from "./navigate";
 import { el, setChildren } from "redom";
 import { LoginData } from "./types";
+import { validateForm } from "../validate/validateForm";
 
 export default function createLoginCard(containerEl: HTMLElement) {
   class LoginForm {
@@ -11,53 +12,60 @@ export default function createLoginCard(containerEl: HTMLElement) {
     constructor() {
       // Создаем элементы. В Redom вторым аргументом идет объект свойств.
       this.el = el(
-        "form.form-login",
-        {
-          onsubmit: (e: Event) => this.handleSubmit(e),
-        },
+        "form.form__login",
+        // {
+        //   onsubmit: (e: Event) => this.handleSubmit(e),
+        // },
+
+        { autocomplete: "on" },
         [
+          el(".form__group", [
           (this.emailInput = el("input.custom-input", {
+            id: "login-email",
             type: "email",
             placeholder: "Email",
             required: true,
+            autocomplete: "email",
           }) as HTMLInputElement),
-
+        ]),
+        el(".form__group", [
           (this.passwordInput = el("input.custom-input", {
+            id: "login-password",
             type: "password",
             placeholder: "Пароль",
             required: true,
+            autocomplete: "current-password",
           }) as HTMLInputElement),
+        ]),
 
           el("button.card__btn", { type: "submit" }, "Войти"),
         ],
       );
     }
 
-    private handleSubmit(e: Event): void {
-      e.preventDefault();
-      const data: LoginData = {
-        email: this.emailInput.value,
-        password: this.passwordInput.value,
+    // private handleSubmit(e: Event): void {
+    //   e.preventDefault();
+    //   const data: LoginData = {
+    //     email: this.emailInput.value,
+    //     password: this.passwordInput.value,
 
-          // alert("Вход в аккаунт")
-      };
+    //     // alert("Вход в аккаунт")
+    //   };
 
-      console.log("Вход выполнен, перенаправление в кабинет музыки...");
-    //   navigate("main");
-     // 1. Успешная проверка (например, поля не пустые)
-        if (this.emailInput.value && this.passwordInput.value) {
-            
-            console.log("Данные верны. Переход в кабинет ...");
-            
-            // 2. Переход на физическую страницу main.html
-            window.location.href = "main.html"; 
-            
-        } else {
-            alert("Пожалуйста, введите логин и пароль");
-        }
-    }
+    //   console.log("Вход выполнен, перенаправление в кабинет музыки...");
+    //   //   navigate("main");
+    //   // 1. Успешная проверка (например, поля не пустые)
+    //   if (this.emailInput.value && this.passwordInput.value) {
+    //     console.log("Данные верны. Переход в кабинет ...");
+
+    //     // 2. Переход на физическую страницу main.html
+    //     window.location.href = "main.html";
+    //   } else {
+    //       validateForm();
+    //     alert("Пожалуйста, введите логин и пароль");
+    //   }
+    // }
   }
-
 
   const cardTitle = el("h2.card__title", "Вход в аккаунт");
 
@@ -67,7 +75,6 @@ export default function createLoginCard(containerEl: HTMLElement) {
   const homeLinkEl = el("a.card__link", { href: "#" }, "На главную");
   const regLinkEl = el("a.card__link", { href: "#" }, "Регистрация");
 
- 
   homeLinkEl.onclick = (e) => {
     e.preventDefault();
     navigate("");
@@ -88,4 +95,6 @@ export default function createLoginCard(containerEl: HTMLElement) {
   // Очистка и отрисовка
   containerEl.innerHTML = "";
   containerEl.append(divCardEl);
+
+  validateForm(".form__login");
 }
