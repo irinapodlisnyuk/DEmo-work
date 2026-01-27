@@ -58,17 +58,16 @@ export default function createLoginCard(containerEl: HTMLElement) {
     }
   }
 
-  // 1. Создаем заголовок
+
   const cardTitle = el("h2.card__title", "Вход в аккаунт");
 
   // 2. Инициализируем форму (берем regForm.el, так как это экземпляр класса)
   const regForm = new LoginForm();
 
-  // 3. Создаем ссылки
   const homeLinkEl = el("a.card__link", { href: "#" }, "На главную");
   const regLinkEl = el("a.card__link", { href: "#" }, "Регистрация");
 
-  // Важно: вызывайте navigate с аргументом или без, согласно логике navigate.ts
+ 
   homeLinkEl.onclick = (e) => {
     e.preventDefault();
     navigate("");
