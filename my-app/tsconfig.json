@@ -3,14 +3,19 @@
     "outDir": "./dist/",
     "noImplicitAny": true,
     "sourceMap": true,
-    "module": "es6",
-    "target": "es5",
+    // "module": "es6",
+    // "target": "es5",
     "jsx": "react",
     "allowJs": true,
-    "moduleResolution": "node",
+   // "moduleResolution": "node",
     "strict": true,            // Разрешает импорт JavaScript
     "checkJs": false,           // (Опционально) не проверять ошибки внутри JS
-    "esModuleInterop": true
+    "esModuleInterop": true,
+     "target": "ES2020",         /* Или ESNext */
+    "module": "ESNext",         /* Это позволит использовать динамические импорты */
+    "moduleResolution": "node", /* Важно для корректного поиска модулей */
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    
   },
   "files": ["global.d.ts"],
    "include": ["./src/**/*"]

@@ -12,9 +12,9 @@
 /* Blocks */
 /* ------------------------------------ */
 
-// @import "./blocks/_header";
-// @import "./blocks/_custom-input";
-// @import "./blocks/_btn";
+@use "./blocks/loader";
+@use "./blocks/creat";
+@use "./blocks/custom-input";
 
 
 

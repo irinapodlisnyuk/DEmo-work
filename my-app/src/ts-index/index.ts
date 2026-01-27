@@ -1,7 +1,9 @@
-import { formRegistration } from "../ts-index/formRegistration";
+
 import '../scss-index/index_style.scss';
 import '../images/sprite.svg';
+// Запуск приложения
+ import {navigate} from "./navigate";
 
-window.addEventListener("DOMContentLoaded", () => {
-  formRegistration();
-});
+document.addEventListener("DOMContentLoaded", function () {
+    navigate();
+})

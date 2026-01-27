@@ -1,0 +1,15 @@
+@use "../global/mixins" as *;
+@use "../global/variables" as *;
+
+.custom-input {
+  display: block;
+  width: 100%;
+  padding: 12px 24px;
+  border: 1px solid $color-dark-Gray;
+  border-radius: 8px;
+  outline: none;
+
+  &:focus {
+    border-color: $color-burnt-orange;
+  }
+}
