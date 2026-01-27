@@ -87,12 +87,11 @@ export default function createLoginCard(containerEl: HTMLElement) {
   const divWrapCardEl = el(".card__wrapper", [homeLinkEl, regLinkEl]);
   const divCardEl = el(".card");
 
-  // 4. Используем setChildren правильно
   // Мы передаем regForm.el (узел DOM), а не сам объект класса
   setChildren(divCardEl, [cardTitle, regForm.el, divWrapCardEl]);
 
   // 5. Очищаем контейнер перед добавлением (если navigate этого не сделал)
-  // Очистка и отрисовка
+
   containerEl.innerHTML = "";
   containerEl.append(divCardEl);
 
