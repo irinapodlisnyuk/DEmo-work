@@ -2,6 +2,9 @@ const users = [];
 const favorites = {};
 
 const User = {
+  getAll: () => {
+    return users;
+  },
   create: (username, password) => {
     const user = { username, password };
     users.push(user);

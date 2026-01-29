@@ -1,24 +1,25 @@
+
+import { getAllAudio } from "./getAllAudio"; // импортируйте вашу функцию
+import { el, mount } from "redom";
 import { Track, Podcast } from "./typesTracks";
-import { podcasts, tracks } from "../../data/tracks";
 
-export function loadTracks() {
-  const podcastList = podcasts as Podcast[];
-  const trackList = tracks as unknown as Track[];
+export type AudioItem = ((Track & { type: 'track' }) | (Podcast & { type: 'podcast' })) & { isFavorite?: boolean };
 
-  // Совмещаем списки в один массив
-  const combinedData = [
-    ...(podcasts as Podcast[]),
-    ...(tracks as unknown as Track[]),
-  ];
+export async function loadTracks() {
+  const items = await getAllAudio(); // Получаем данные с сервера
 
-  // Пример вывода в HTML
-  const container = document.getElementById("tracks-tbody");
-  if (container) {
-    container.innerHTML = `
-    <h2>Podcasts</h2>
-    <ul>${podcastList.map((p) => `<li>${p.title} (${p.host})</li>`).join("")}</ul>
-    <h2>Tracks</h2>
-    <ul>${trackList.map((t) => `<li>${t.title} - ${t.duration}</li>`).join("")}</ul>
-  `;
-  }
+  const elements = items.map((item: AudioItem) =>
+    el("li.audio-item", [
+      el("span.icon", item.type === "track" ? "🎵" : "🎙️"), // Разные иконки
+      el("span.title", item.title),
+      el("span.category", item.type === "track" ? "Песня" : "Подкаст"),
+    ]),
+  );
+   const container = document.getElementById("tracks-tbody") as HTMLElement;
+  const list = el("ul.track-list", elements);
+
+ // Очищаем старые данные и монтируем новые
+  container.innerHTML = "";
+  mount(container, el("fragment", elements)); 
+
 }

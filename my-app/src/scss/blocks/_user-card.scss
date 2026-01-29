@@ -86,7 +86,7 @@
   }
 
   &__exit,
-  &__buttonRedactionEl {
+  &__btnRegEl {
     background-color: $color-burnt-orange;
     padding: 16px 10px;
     transition: background-color $transition-300;
@@ -97,9 +97,10 @@
     line-height: 12px;
     letter-spacing: 0.01em;
     color: $color-white;
+    cursor: pointer;
 
     &:hover {
-      background-color: $color-international-orangee;;
+      background-color: $color-international-orangee;
     }
   }
 
@@ -109,7 +110,13 @@
     line-height: 12px;
     color: $color-burnt-orange;
     word-break: break-all;
-     width: 281px;
-     line-height: 1.5;
+    width: 281px;
+    line-height: 1.5;
+  }
+
+  &__btnRegEl:disabled {
+    opacity: 0.6;
+    cursor: none;
+    pointer-events: none;
   }
 }

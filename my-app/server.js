@@ -1,32 +1,27 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const routes = require("./routes");
+const cors = require("cors");
 const webpack = require("webpack");
+const config = require('./webpack.config.js');
+const routes = require("./routes/routes.js"); 
 
-// 1. Сначала импортируем конфигурацию
-const config = require('./webpack.config.js'); 
-
-// 2. Затем создаем компилятор
+const app = express();
 const compiler = webpack(config);
 
-// 3. ЗАТЕМ создаем само приложение app (ЭТО ДОЛЖНО БЫТЬ ВЫШЕ ЧЕМ app.use)
-const app = express(); 
+app.use(cors());
+app.use(express.json()); // Заменяет bodyParser
 
-// 4. ТЕПЕРЬ можно использовать app.use
+// Webpack Middleware для сборки фронтенда на лету
 app.use(require('webpack-dev-middleware')(compiler, {
     publicPath: config.output.publicPath || '/'
 }));
 
-// 5. Раздаем статику из папки dist
-// app.use(express.static(__dirname, 'dist')));
-//const PORT = 8000;
-const PORT = process.env.PORT || 8000;
-
- app.use(express.static('./src'));
-
-app.use(bodyParser.json());
+// API маршруты
 app.use("/api", routes);
 
+// Статика
+app.use(express.static('./src'));
+
+const PORT = 8000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });

@@ -15,9 +15,11 @@ const register = (req, res) => {
   const hashedPassword = bcrypt.hashSync(password, 10);
   const newUser = User.create(username, hashedPassword);
 
+  console.log("Список всех юзеров:", User.getAll());
+
   return res
     .status(201)
-    .json({ message: "пользователь успешно добавлен", user: newUser });
+    .json({ message: "пользователь успешно добавлен", user: newUser,  username: User.username });
 };
 
 const login = (req, res) => {

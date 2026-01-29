@@ -15,125 +15,73 @@ export function validateForm(formSelector: string): void {
   // Проверяем, какая именно форма пришла, и вешаем нужные правила
   if (formSelector === ".form__reg") {
     validate
-      .addField("#name", [{ rule: "required" as Rules, errorMessage: "Введите имя" }])
-      .addField("#surname", [{ rule: "required" as Rules, errorMessage: "Введите фамилию" }])
-      .addField("#email", [{ rule: "required" as Rules, errorMessage: "Введите почту" }])
-      .addField("#password", [{ rule: "required" as Rules, errorMessage: "Придумайте пароль" }]);
-  } 
-  
-  if (formSelector === ".form__login") {
-    validate
-      .addField("#login-email", [{ rule: "required" as Rules, errorMessage: "Введите email" }])
-      .addField("#login-password", [{ rule: "required" as Rules, errorMessage: "Введите пароль" }]);
+      .addField("#name", [
+        { rule: "required" as Rules, errorMessage: "Введите имя" },
+      ])
+      // .addField("#surname", [
+      //   { rule: "required" as Rules, errorMessage: "Введите фамилию" },
+      // ])
+      .addField("#email", [
+        { rule: "required" as Rules, errorMessage: "Введите почту" },
+      ])
+      .addField("#password", [
+        { rule: "required" as Rules, errorMessage: "Придумайте пароль" },
+        {
+          rule: "minLength" as Rules,
+          value: 4, // Минимальное количество символов
+          errorMessage: "Пароль слишком короткий (минимум 4 символа)",
+        },
+      ]);
   }
 
-  validate.onSuccess((event?: Event) => {
-    if (event) event.preventDefault();
-    
-    if (formSelector === ".form__reg") {
-      alert("Регистрация успешна!");
-      navigate("login");
-    } else {
-      alert("Вход выполнен!");
-       window.location.href = "main.html";
+  if (formSelector === ".form__login") {
+    validate
+      .addField("#login-email", [
+        { rule: "required" as Rules, errorMessage: "Введите email" },
+      ])
+      .addField("#login-password", [
+        { rule: "required" as Rules, errorMessage: "Введите пароль" },
+      ]);
+  }
+
+  validate.onSuccess(async (event) => {
+    event?.preventDefault();
+
+    // 1. Автоматический сбор данных (нужны атрибуты name у инпутов!)
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    // const token = localStorage.getItem("token");
+
+    // 2. Определяем путь в зависимости от формы
+    const isReg = formSelector === ".form__reg";
+    const apiUrl = isReg ? "/api/register" : "/api/login";
+
+    try {
+      const response = await fetch(`http://localhost:8000${apiUrl}`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data), // Отправит {username: "...", password: "..."}
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        if (isReg) {
+          // Логика для РЕГИСТРАЦИИ (по вашему ТЗ)
+          alert(result.message); // "пользователь успешно добавлен"
+          navigate("login");
+        } else {
+          // Логика для ВХОДА
+          localStorage.setItem("token", result.token);
+          localStorage.setItem("username", String(data.username));
+          window.location.href = "main.html";
+        }
+      } else {
+        // Вывод ошибки (например, "пользователь уже существует")
+        alert(result.message);
+      }
+    } catch (error) {
+      alert("Ошибка соединения с сервером");
     }
   });
 }
-
-// export function validateForm(): void {
-//   // Находим форму в DOM, чтобы убедиться в её существовании
-//   const form = document.querySelector<HTMLFormElement>(".form__reg");
-
-//   if (!form) {
-//     console.error("Форма .card__form не найдена");
-//     return;
-//   }
-
-//   const validate = new JustValidate(form);
-
-//   validate
-//     .addField("#name", [
-//       {
-//         rule: "required" as Rules,
-//         errorMessage: "Введите Ваше имя",
-//       },
-//       {
-//         rule: "minLength" as Rules,
-//         value: 2,
-//         errorMessage: "Минимальная длина — 2 символа",
-//       },
-//       {
-//         rule: "maxLength" as Rules,
-//         value: 10,
-//         errorMessage: "Максимальная длина — 10 символов",
-//       },
-//     ])
-
-//     .addField("#surname", [
-//       {
-//         rule: "required" as Rules,
-//         errorMessage: "Введите фамилию.",
-//       },
-//       {
-//         rule: "minLength" as Rules,
-//         value: 2,
-//         errorMessage: "Минимальная длина — 2 символа",
-//       },
-//       {
-//         rule: "maxLength" as Rules,
-//         value: 10,
-//         errorMessage: "Максимальная длина — 10 символов",
-//       },
-//     ])
-//     .addField("#email", [
-//       {
-//         rule: "required" as Rules,
-//         errorMessage: "Введите почту",
-//       },
-//       {
-//         rule: "email" as Rules,
-//         errorMessage: "Почта введена неверно!",
-//       },
-//       {
-//         // Используем customRegexp для своей регулярки
-//         rule: "customRegexp" as Rules,
-//         value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-//         errorMessage: "Неверный формат email!",
-//       },
-//     ])
-//     .addField("#password", [
-//       {
-//         rule: "required" as Rules,
-//         errorMessage: "Придумайте пароль",
-//       },
-
-//       {
-//         rule: "minLength" as Rules,
-//         value: 5,
-//         errorMessage: "Минимальная длина — 5 символов",
-//       },
-//     //   {
-//     //     rule: Rules.StrongPassword,
-//     //     errorMessage:
-//     //       "Пароль должен содержать минимум 8 символов, одну заглавную букву, одну строчную, одну цифру и один спецсимвол",
-//     //   },  ЕСЛИ ЕСТЬ НЕОБХОДИМОСТЬ
-//     ]);
-
-//   // event? — делаем необязательным, чтобы избежать ошибки несовместимости типов
-//   validate.onSuccess((event?: Event) => {
-//     // Проверка наличия события для безопасного обращения к target
-//     if (!event || !event.target) {
-//       console.log("Форма валидна, но событие не передано");
-//       return;
-//     }
-
-//     const formElement = event.target as HTMLFormElement;
-//     const formData = new FormData(formElement);
-
-//     console.log("Валидация прошла успешно!");
-//     console.log("Данные формы:", Object.fromEntries(formData.entries()));
-
-//     // Если нужно отправить форму:
-//     formElement.submit();
-//   });
-// }

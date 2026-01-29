@@ -994,7 +994,7 @@ button {
   display: flex;
   gap: 15px;
 }
-.user-card__exit, .user-card__buttonRedactionEl {
+.user-card__exit, .user-card__btnRegEl {
   background-color: #FC6D3E;
   padding: 16px 10px;
   transition: background-color ease-in 0.3s;
@@ -1005,8 +1005,9 @@ button {
   line-height: 12px;
   letter-spacing: 0.01em;
   color: #ffffff;
+  cursor: pointer;
 }
-.user-card__exit:hover, .user-card__buttonRedactionEl:hover {
+.user-card__exit:hover, .user-card__btnRegEl:hover {
   background-color: #fd531a;
 }
 .user-card__error {
@@ -1017,6 +1018,11 @@ button {
   word-break: break-all;
   width: 281px;
   line-height: 1.5;
+}
+.user-card__btnRegEl:disabled {
+  opacity: 0.6;
+  cursor: none;
+  pointer-events: none;
 }
 
 .player {

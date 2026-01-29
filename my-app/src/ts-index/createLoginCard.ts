@@ -21,6 +21,7 @@ export default function createLoginCard(containerEl: HTMLElement) {
         [
           el(".form__group", [
           (this.emailInput = el("input.custom-input", {
+            name: "username",
             id: "login-email",
             type: "email",
             placeholder: "Email",
@@ -30,6 +31,7 @@ export default function createLoginCard(containerEl: HTMLElement) {
         ]),
         el(".form__group", [
           (this.passwordInput = el("input.custom-input", {
+            name: "password",
             id: "login-password",
             type: "password",
             placeholder: "Пароль",
