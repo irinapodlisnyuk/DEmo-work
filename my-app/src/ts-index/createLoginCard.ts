@@ -20,25 +20,25 @@ export default function createLoginCard(containerEl: HTMLElement) {
         { autocomplete: "on" },
         [
           el(".form__group", [
-          (this.emailInput = el("input.custom-input", {
-            name: "username",
-            id: "login-email",
-            type: "email",
-            placeholder: "Email",
-            required: true,
-            autocomplete: "email",
-          }) as HTMLInputElement),
-        ]),
-        el(".form__group", [
-          (this.passwordInput = el("input.custom-input", {
-            name: "password",
-            id: "login-password",
-            type: "password",
-            placeholder: "Пароль",
-            required: true,
-            autocomplete: "current-password",
-          }) as HTMLInputElement),
-        ]),
+            (this.emailInput = el("input.custom-input", {
+              name: "username", // Теперь это username
+              id: "login-username",
+              type: "text", 
+              placeholder: "Имя",
+              required: true,
+              autocomplete: "username",
+            }) as HTMLInputElement),
+          ]),
+          el(".form__group", [
+            (this.passwordInput = el("input.custom-input", {
+              name: "password",
+              id: "login-password",
+              type: "password",
+              placeholder: "Пароль",
+              required: true,
+              autocomplete: "current-password",
+            }) as HTMLInputElement),
+          ]),
 
           el("button.card__btn", { type: "submit" }, "Войти"),
         ],

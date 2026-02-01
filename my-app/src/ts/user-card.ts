@@ -1,6 +1,6 @@
 import { el, svg, setChildren } from "redom";
 import spritePath from "../images/sprite.svg";
-import userPhoto from '../images/foto-user-dekstop.png';
+import userPhoto from '../images/Avatar.png';
 
 export function cardUser() {
   const currentUserName = localStorage.getItem("username") || "Гость";
@@ -24,8 +24,8 @@ export function cardUser() {
       el("h2.user-card__title",  currentUserName),
       el("img.user-card__img", { 
         src: userPhoto, 
-        width: "25", 
-        height: "25", 
+        width: "42", 
+        height: "42", 
         alt: "User Photo" 
       })
     ]),

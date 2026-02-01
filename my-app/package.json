@@ -33,7 +33,9 @@
     "jsonwebtoken": "^9.0.2",
     "just-validate": "^4.3.0",
     "navigo": "^8.11.1",
-    "redom": "^4.3.0"
+    "redom": "^4.3.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "simplebar": "^6.3.3"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",

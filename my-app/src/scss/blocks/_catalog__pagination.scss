@@ -3,43 +3,82 @@
 
 
 .catalog__pagination {
-  margin: 0 0 43px;
+  flex-shrink: 0;
+  display: flex !important; // Гарантируем, что блок не скрыт
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  // position: relative;
+  // z-index: 10; // Чтобы быть выше подложек
+  //padding-top: 20px; 
+}
 
-     @include vp-767 {
-      display: none;
-    }
-  &-list {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    list-style: none;
-    margin: 0 auto;
-    padding: 0;
-  }
-
-  &-item {
-    min-width: 20px;
-    min-height: 20px;
-  }
-
-  &-link {
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    font-family: $ff-actor;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 12px;
-    letter-spacing: 0.01em;
-    color: $color-nero;
-    transition:  background-color $transition-300;
-
-    &:hover,
-    &:focus {
-        background-color: $color-whisper;
-    }
-     &:active {
-        background-color: $color-dark-gray;
-    }
+.catalog__pagination-btn {
+ 
+  border: transparent;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 16px;
+  
+  &.active {
+    color: $color-burnt-orange; // Подсветка активной
+    font-weight: bold;
   }
 }
+
+
+// .catalog__pagination {
+//   flex-shrink: 0; // Не сжимается
+//   height: 50px;   // Фиксируем высоту пагинации
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   margin: 0 0 43px;
+
+//      @include vp-767 {
+//       display: none;
+//     }
+
+//   &-btn {
+//   &.active {
+//     color: $color-burnt-orange;
+//     font-weight: bold;
+//   }
+// }
+
+  // &-list {
+  //   display: flex;
+  //   justify-content: center;
+  //   gap: 10px;
+  //   list-style: none;
+  //   margin: 0 auto;
+  //   padding: 0;
+  // }
+
+  // &-item {
+  //   min-width: 20px;
+  //   min-height: 20px;
+  // }
+
+  // &-link {
+  //   width: 100%;
+  //   height: 100%;
+  //   border-radius: inherit;
+  //   font-family: $ff-actor;
+  //   font-weight: 400;
+  //   font-size: 14px;
+  //   line-height: 12px;
+  //   letter-spacing: 0.01em;
+  //   color: $color-nero;
+  //   transition:  background-color $transition-300;
+
+//     &:hover,
+//     &:focus {
+//         background-color: $color-whisper;
+//     }
+//      &:active {
+//         background-color: $color-dark-gray;
+//     }
+  
+// }

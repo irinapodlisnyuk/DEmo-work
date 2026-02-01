@@ -1,0 +1,57 @@
+@use "../global/mixins" as *;
+@use "../global/variables" as *;
+
+.tracks-scroll {
+ width: 100%;
+  overflow-x: hidden;
+  margin: 0 0 20px;
+
+  // --- ДЕКСТОП ---
+  @media (min-width: 1024px) {
+    // Высчитываем высоту: 100% экрана МИНУС (хедер + заголовок + пагинация + плеер)
+    // 450px — это примерная высота, при которой 8 строк обычно влезают со скроллом
+    height: 400px; 
+    overflow-y: auto; // Включаем вертикальный скролл внутри блока
+    
+    // Скрываем полосу прокрутки, чтобы было красиво, как на мобилке
+    scrollbar-width: none; 
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  @media (max-width: 1023px) {
+    height: calc(100vh - 120px);
+    overflow-y: auto; // Обязательно для работы IntersectionObserver
+    overflow-x: hidden;
+    padding-bottom: 120px;
+    -webkit-overflow-scrolling: touch;
+
+    /* 1. Скрываем нативный скроллбар (Chrome, Safari, Edge, Opera) */
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    /* 2. Скрываем нативный скроллбар (Firefox) */
+    scrollbar-width: none;
+    /* 3. Скрываем нативный скроллбар (IE/Edge старый) */
+    -ms-overflow-style: none;
+  }
+
+  /* 4. Скрываем SimpleBar полностью, если он инициализирован */
+  .simplebar-track,
+  .simplebar-scrollbar {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  // Если SimpleBar создает обертку, скрываем скролл внутри нее
+  .simplebar-content-wrapper {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

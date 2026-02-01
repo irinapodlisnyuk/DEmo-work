@@ -1,25 +1,50 @@
 @use "../global/mixins" as *;
 @use "../global/variables" as *;
 
-.player {
-  & .container {
-    padding: 0;
-  }
-  border-top: 1px solid $color-whisper;
+.footer {
+    border-top: 1px solid $color-whisper;
+  // flex: 0 0 auto;
+  // height: 100px;
+  // flex-shrink: 0;
+  // position: fixed;
+  // width: 100%;
+  // bottom: 0;
+  // left: 0;
+  //  z-index: 1;
+  
+  background-color: $color-white;
 
-  &__wrapper {
+  // @include vp-1023 {
+  //   position: fixed;
+  //   width: 100%;
+  //   bottom: 0;
+  //   left: 0;
+  //   z-index: 1;
+  // }
+
+  @include vp-767 {
+    // position: fixed;
+    height: 120px;
+    // width: 100%;
+    // bottom: 0;
+    // left: 0;
+    // z-index: 1;
+  }
+
+  &__player {
     display: grid;
     align-items: end;
+    width: 100%;
     grid-template-columns: 434px 681px 97px;
     gap: 84px;
     padding: 0;
     margin: 0;
-    overflow: hidden;
     background-color: $color-white;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bb71f3', endColorstr='#3d4d91', GradientType=1);
     -webkit-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    border-top: 1px solid $color-whisper;
 
     @media (max-width: 1392px) {
       grid-template-columns: 434px 1fr 97px;
@@ -28,20 +53,24 @@
     @include vp-1023 {
       display: flex;
       gap: 16px;
-      flex-direction: column;
-      align-items: stretch;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: nowrap;
+      justify-content: space-between;
     }
 
     @include vp-767 {
-      max-height: 120px;
-      display: grid;
-      grid-template-columns: 1fr 40px;
-      gap: 16px 10px;
-      padding: 14px 16px 16px 8px;
+      min-width: 336px;
+      flex-direction: column;
+      align-items: flex-start;
+      flex-wrap: nowrap;
+      padding: 14px 0 16px 0;
+      position: relative;
+      margin: 0 -8px;
     }
   }
 
-  &__fail {
+  &__wrapper {
     display: flex;
     align-items: center;
     height: 100%;
@@ -88,7 +117,7 @@
 
     @include vp-767 {
       width: 181px;
-       white-space: nowrap;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -106,10 +135,12 @@
 
     @include vp-1023 {
       padding: 0;
+      width: 100%;
     }
 
     @include vp-767 {
-      display: contents;
+      display: flex;
+      // display: contents;
     }
   }
 
@@ -154,8 +185,9 @@
     justify-content: center;
     gap: 20px;
     @include vp-767 {
-      width: 40px;
-      height: 40px;
+      position: absolute;
+      bottom: 45px;
+      right: 0;
     }
   }
   &__btn {
@@ -178,6 +210,11 @@
       border-radius: 50%;
       background-color: $color-dark-gray;
       left: 50%;
+      // @include vp-767 {
+      //   position: absolute;
+      //   top: 0;
+      //   right: 0;
+      // }
     }
 
     &#pauseBtn {
@@ -207,16 +244,17 @@
   }
 
   &__controlsProgress {
-    position: relative;
-    display: grid;
-    grid-template-columns: 24px 1fr 24px;
+    // position: relative;
+    display: flex;
+    // display: grid;
+    // grid-template-columns: 24px 1fr 24px;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
 
     @include vp-767 {
-      grid-row: 2/3;
-      grid-column: 1/3;
+      display: flex;
+      //   position: relative;
     }
   }
   &__timer,
@@ -230,6 +268,7 @@
 
   /* Progress */
   &__waveform {
+    width: 100%;
     height: 20px;
     position: absolute;
     left: 35px;
@@ -251,7 +290,14 @@
   &__waveform:hover {
     opacity: 1;
   }
+
+  &__line {
+    width: 100%;
+    display: flex;
+    position: relative;
+  }
   &__bar {
+    width: 100%;
     height: 2px;
     background-color: $color-whisper;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.33);
@@ -261,20 +307,20 @@
       width: 100%;
     }
 
-    @include vp-767 {
-      min-width: 264px;
-    }
+    // @include vp-767 {
+    //   min-width: 264px;
+    // }
   }
   &__progress {
     position: absolute;
-    left: 35px;
+    width: 100%;
     height: 2px;
     transform: translateY(50%);
     background-color: $color-burnt-orange;
     z-index: -1;
 
     @include vp-1023 {
-      width: 100%;
+      // width: 100%;
     }
     @include vp-767 {
       min-width: 264px;
@@ -292,6 +338,7 @@
     }
 
     @include vp-1023 {
+      margin: 0;
     }
 
     @include vp-767 {

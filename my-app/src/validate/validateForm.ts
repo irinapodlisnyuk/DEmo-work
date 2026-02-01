@@ -36,8 +36,8 @@ export function validateForm(formSelector: string): void {
 
   if (formSelector === ".form__login") {
     validate
-      .addField("#login-email", [
-        { rule: "required" as Rules, errorMessage: "Введите email" },
+      .addField("#login-username", [
+        { rule: "required" as Rules, errorMessage: "Введите имя" },
       ])
       .addField("#login-password", [
         { rule: "required" as Rules, errorMessage: "Введите пароль" },

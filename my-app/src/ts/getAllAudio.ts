@@ -1,6 +1,6 @@
 import  {Track,  Podcast} from "./typesTracks";
+import {AudioItem} from "./typesTracks"
 
-export type AudioItem = ((Track & { type: 'track' }) | (Podcast & { type: 'podcast' })) & { isFavorite?: boolean };
 
 export async function getAllAudio(): Promise<AudioItem[]> {
   const token = localStorage.getItem("token");
@@ -13,7 +13,7 @@ export async function getAllAudio(): Promise<AudioItem[]> {
     const [tracksRes, podcastsRes, favsRes] = await Promise.all([
       fetch("http://localhost:8000/api/tracks", { headers }),
       fetch("http://localhost:8000/api/podcasts", { headers }),
-      fetch("http://localhost:8000/api/favorites", { headers }) // Запрос избранного
+      fetch("http://localhost:8000/api/favorites", { headers })
     ]);
 
     if ([tracksRes, podcastsRes, favsRes].some(r => r.status === 401)) {

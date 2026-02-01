@@ -1,0 +1,193 @@
+@use "../global/mixins" as *;
+@use "../global/variables" as *;
+
+#tracks-tbody {
+ // min-height: calc(100vh - 100px);
+
+  @include vp-767 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+
+    #tracks-tbody::after {
+      content: "";
+      display: block;
+      height: 140px;
+    }
+   }
+}
+
+.track-row {
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 40px 434px 262px 195px 44px 1fr 43px;
+  justify-items: start;
+  align-items: center;
+  border-bottom: 1px solid #e8e8e8;
+  width: 100%;
+
+  @media (max-width: 1392px) {
+    grid-template-columns: 40px 1fr 1fr 1fr 44px 46px 43px;
+  }
+
+  @include vp-1023 {
+    grid-template-columns: 40px 295px 1fr 187px 44px 54px 43px;
+  }
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 40px 1fr 1fr 1fr 44px 46px 43px;
+  }
+
+  @include vp-767 {
+    background-color: $color-white;
+    display: flex;
+    gap: 10px;
+  }
+
+  &__num {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.01em;
+    color: $color-nero;
+    padding: 0 0 0 7px;
+
+    @include vp-767 {
+      display: none;
+    }
+  }
+
+  &__info {
+    width: 100%;
+    padding: 0;
+  }
+
+  .track-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 12px 4px;
+    gap: 10px;
+
+    @include vp-767 {
+      padding: 0;
+    }
+  }
+
+  .track-img {
+    width: 60px;
+    height: 60px;
+
+    @include vp-767 {
+      width: 70px;
+      height: 70px;
+    }
+  }
+
+  .track-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    @include vp-767 {
+      gap: 4px;
+    }
+  }
+
+  .track-title {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    letter-spacing: 0.01em;
+    color: $color-nero;
+
+    @include vp-767 {
+      width: 142px;
+      font-size: 18px;
+      line-height: 22px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__album {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    letter-spacing: 0.01em;
+    color: $color-nero;
+
+    @include vp-767 {
+      display: none;
+    }
+  }
+
+  &__heart,
+  &__more {
+    display: flex;
+    margin: 0 auto;
+  }
+
+  .track-author {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0.01em;
+    color: $color-dark-gray;
+
+    @include vp-767 {
+      width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__date,
+  &__actions {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    letter-spacing: 0.01em;
+    color: $color-dark-gray;
+
+    @include vp-767 {
+      display: none;
+    }
+  }
+
+  .fav-btn,
+  .more-btn {
+    width: 24px;
+    height: 24px;
+    border: transparent;
+    background-color: transparent;
+    position: relative;
+    padding: 0;
+
+    svg{
+      width: 100%;
+      height: 100%;
+    }
+
+    &__icon {
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: $color-white;
+      stroke: $color-burnt-orange;
+      stroke-width: 1px;
+    }
+
+    .more-btn__icon {
+      stroke: none;
+
+      @include vp-767 {
+        width: 17px;
+        height: 17px;
+      }
+    }
+  }
+}

@@ -59,7 +59,7 @@
             </form>
             <div class="header__user">
               <button class="header__user-btn btn" type="button">
-                <picture>
+                <!-- <picture>
                   <source
                     media="(max-width: 767px)"
                     srcset="
@@ -70,19 +70,24 @@
                   <source
                     media="(max-width: 1023px)"
                     srcset="
-                      ./images/foto-user-dekstop.png    1x,
-                      ./images/foto-user-dekstop@2x.png 2x
+                      ./images/foto-user-desktop.png   1x,
+                      ./images/foto-user-desktop@2x.png 2x
                     "
-                  />
-                  <img
-                    class="header__user-img"
-                    src="./images/foto-user-dekstop.png"
-                    srcset="./images/foto-user-dekstop@2x.png 2x"
-                    width="42"
-                    height="42"
-                    alt="Фотография пользователя"
-                  />
-                </picture>
+                  /> -->
+                <img
+                  class="header__user-img"
+                  src="./images/foto-user-desktop.png"
+                  srcset="./images/foto-user-desktop@2x.png 2x"
+                  width="42"
+                  height="42"
+                  alt="Фотография пользователя"
+                  onerror="
+                    this.onerror = null;
+                    this.src = './images/avatar.png';
+                    this.srcset = '';
+                  "
+                />
+                <!-- </picture> -->
                 <span class="header__user-text">username</span>
                 <svg
                   class="header__user-icon"
@@ -117,7 +122,6 @@
       </div>
     </header>
     <main>
-
       <!-- CATALOG -->
       <section class="catalog">
         <h1 class="visually-hidden">Аудифайлы и треки</h1>
@@ -162,12 +166,13 @@
                     <div class="custom-radio">
                       <input
                         class="custom-radio__field visually-hidden"
-                        id="radio-audio"
+                        id="all-audio"
                         type="radio"
                         name="playlist"
                         value="audio"
+                        checked
                       />
-                      <label class="custom-radio__label" for="radio-audio">
+                      <label class="custom-radio__label" for="all-audio">
                         <svg
                           class="custom-radio__icon"
                           width="32"
@@ -194,42 +199,44 @@
             <div class="catalog__wrapper-center">
               <h2 class="catalog__title">Аудифайлы и треки</h2>
               <!-- Карточка трека  -->
-              <table class="catalog__table" id="catalog-table">
-                <thead class="catalog__table-title">
-                  <tr class="catalog__table-list">
-                    <th class="catalog__table-item">№</th>
-                    <th class="catalog__table-item">НАЗВАНИЕ</th>
-                    <th class="catalog__table-item">АЛЬБОМ</th>
-                    <th class="catalog__table-item">
-                      <svg
-                        class="catalog__table-icon"
-                        width="16"
-                        height="16"
-                        aria-hidden="true"
-                      >
-                        <use href="./images/sprite.svg#calendar"></use>
-                      </svg>
-                    </th>
-                    <th class="catalog__table-title">
-                      <svg
-                        class="catalog__table-icon"
-                        width="16"
-                        height="16"
-                        aria-hidden="true"
-                      >
-                        <use href="./images/sprite.svg#time"></use>
-                      </svg>
-                    </th>
-                  </tr>
-                </thead>
-                            <!--TRACKS -->
-                <tbody id="tracks-tbody">
-                  <!-- Rows will be inserted here -->
-                </tbody>
-              </table>
+              <div class="tracks-scroll">
+                <table class="catalog__table" id="catalog-table">
+                  <thead class="catalog__table-title">
+                    <tr class="catalog__table-list">
+                      <th class="catalog__table-item">№</th>
+                      <th class="catalog__table-item">НАЗВАНИЕ</th>
+                      <th class="catalog__table-item">АЛЬБОМ</th>
+                      <th class="catalog__table-item">
+                        <svg
+                          class="catalog__table-icon"
+                          width="16"
+                          height="16"
+                          aria-hidden="true"
+                        >
+                          <use href="./images/sprite.svg#calendar"></use>
+                        </svg>
+                      </th>
+                      <th class="catalog__table-title">
+                        <svg
+                          class="catalog__table-icon"
+                          width="16"
+                          height="16"
+                          aria-hidden="true"
+                        >
+                          <use href="./images/sprite.svg#time"></use>
+                        </svg>
+                      </th>
+                    </tr>
+                  </thead>
+                  <!--TRACKS -->
+                  <tbody id="tracks-tbody">
+                    <!-- Rows will be inserted here -->
+                  </tbody>
+                </table>
+              </div>
 
               <div class="catalog__pagination">
-                <ul class="catalog__pagination-list">
+                <!-- <ul class="catalog__pagination-list">
                   <li class="catalog__pagination-item">
                     <button class="catalog__pagination-link btn">1</button>
                   </li>
@@ -239,20 +246,20 @@
                   <li class="catalog__pagination-item">
                     <button class="catalog__pagination-link btn">3</button>
                   </li>
-                </ul>
+                </ul> -->
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!--PLAYER-->
-      <section class="player">
+      <!--!PLAYER-->
+      <!-- <section class="player">
         <div class="container">
           <div class="player__wrapper">
-            <div class="player__fail">
-              <!--Фаил который проигрывается плеером-->
-              <img
+            <div class="player__fail"> -->
+      <!--Фаил который проигрывается плеером-->
+      <!-- <img
                 class="player__fail-img"
                 src="./images/img-audio/rectangle.png"
                 width="60"
@@ -275,10 +282,10 @@
                   >Ludovico Einaudi, Czech National Symphony Orchestra</span
                 >
               </div>
-            </div>
+            </div> -->
 
-            <!-- Controls -->
-            <div class="player__controls">
+      <!-- Controls -->
+      <!-- <div class="player__controls">
               <div class="player__controls-loading" id="loading"></div>
               <div class="player__controlsInner">
                 <div class="player__btn" id="sortBtn">
@@ -341,19 +348,19 @@
                     <use href="./images/sprite.svg#repeat"></use>
                   </svg>
                 </div>
-              </div>
-              <!-- Progress -->
-              <div class="player__controlsProgress">
+              </div> -->
+      <!-- Progress -->
+      <!-- <div class="player__controlsProgress">
                 <div class="player__timer" id="timer">0:00</div>
                 <div class="player__waveform" id="waveform"></div>
                 <div class="player__bar" id="bar"></div>
                 <div class="player__progress" id="progress"></div>
                 <div class="player__duration" id="duration">0:00</div>
               </div>
-            </div>
+            </div> -->
 
-            <!-- Volume -->
-            <div class="player__volume">
+      <!-- Volume -->
+      <!-- <div class="player__volume">
               <svg
                 class="player__icon"
                 width="16"
@@ -376,135 +383,137 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
     </main>
-    <!-- <footer class="footer"> -->
-    <!-- <div class="container">
-        <div class="player__wrapper">
-          <div class="player__fail"> -->
-    <!--Фаил который проигрывается плеером-->
-    <!-- <img
-              class="player__fail-img"
-              src="./imagess/img-audio/rectangle.png"
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__player">
+          <div class="footer__wrapper">
+            <!-- Фаил который проигрывается плеером -->
+            <img
+              class="footer__wrapper-img"
+              src="./images/img-audio/placeholder.png"
               width="60"
               height="60"
               alt="Постер музыкального трека"
             />
-            <div class="player__info">
-              <div class="player__top">
-                <p class="player__top-title" id="track">Histoire Sans Nom</p>
+            <div class="footer__info">
+              <div class="footer__top">
+                <p class="footer__top-title" id="track">Histoire Sans Nom</p>
                 <svg
-                  class="player__top-icon"
+                  class="footer__top-icon"
                   width="24"
                   height="24"
                   aria-hidden="true"
                 >
-                  <use xlink:href="./imagess/sprite.svg#heart"></use>
+                  <use xlink:href="./images/sprite.svg#heart"></use>
                 </svg>
               </div>
-              <span class="player__info-text"
+              <span class="footer__info-text"
                 >Ludovico Einaudi, Czech National Symphony Orchestra</span
               >
             </div>
-          </div> -->
+          </div>
 
-    <!-- Controls -->
-    <!-- <div class="player__controls">
-            <div class="player__controlsOuter">
-              <div class="player__controlsInner-loading" id="loading"></div>
-              <div class="player__controlsInner">
-                <div class="player__btn" id="sortBtn">
+          <!-- Controls -->
+          <div class="footer__controls">
+            <div class="footer__controlsOuter">
+              <div class="footer__controlsInner-loading" id="loading"></div>
+              <div class="footer__controlsInner">
+                <div class="footer__btn" id="sortBtn">
                   <svg
-                    class="player__btn-icon"
+                    class="footer__btn-icon"
                     width="16"
                     height="16"
                     aria-hidden="true"
                   >
-                    <use xlink:href="./imagess/sprite.svg#shuffle"></use>
+                    <use href="./images/sprite.svg#shuffle"></use>
                   </svg>
                 </div>
-                <div class="player__btn" id="prevBtn">
+                <div class="footer__btn" id="prevBtn">
                   <svg
-                    class="player__btn-icon"
+                    class="footer__btn-icon"
                     width="16"
                     height="16"
                     aria-hidden="true"
                   >
-                    <use xlink:href="./imagess/sprite.svg#skipBack"></use>
+                    <use href="./images/sprite.svg#skipBack"></use>
                   </svg>
                 </div>
-                <div class="player__btn" id="playBtn">
+                <div class="footer__btn" id="playBtn">
                   <svg
-                    class="player__btn-play"
+                    class="footer__btn-play"
                     width="12"
                     height="15"
                     aria-hidden="true"
                   >
-                    <use xlink:href="./imagess/sprite.svg#play"></use>
+                    <use href="./images/sprite.svg#play"></use>
                   </svg>
                 </div>
-                <div class="player__btn" id="pauseBtn">
+                <div class="footer__btn" id="pauseBtn">
                   <svg
-                    class="player__btn-pause"
+                    class="footer__btn-pause"
                     width="12"
                     height="15"
                     aria-hidden="true"
                   >
-                    <use xlink:href="./imagess/sprite.svg#pause"></use>
+                    <use href="./images/sprite.svg#pause"></use>
                   </svg>
                 </div>
-                <div class="player__btn" id="nextBtn">
+                <div class="footer__btn" id="nextBtn">
                   <svg
-                    class="player__btn-icon"
+                    class="footer__btn-icon"
                     width="16"
                     height="16"
                     aria-hidden="true"
                   >
-                    <use xlink:href="./imagess/sprite.svg#next-track"></use>
+                    <use href="./images/sprite.svg#next-track"></use>
                   </svg>
                 </div>
-                <div class="player__btn" id="repeatBtn">
+                <div class="footer__btn" id="repeatBtn">
                   <svg
-                    class="player__btn-icon"
+                    class="footer__btn-icon"
                     width="16"
                     height="16"
                     aria-hidden="true"
                   >
-                    <use xlink:href="./imagess/sprite.svg#repeat"></use>
+                    <use href="./images/sprite.svg#repeat"></use>
                   </svg>
                 </div>
-              </div> -->
-    <!-- Progress -->
-    <!-- <div class="player__controlsProgress">
-                <div class="player__timer" id="timer">0:00</div>
-                <div class="player__waveform" id="waveform"></div>
-                <div class="player__bar" id="bar"></div>
-                <div class="player__progress" id="progress"></div>
-                <div class="player__duration" id="duration">0:00</div>
+              </div>
+              <!-- Progress -->
+              <div class="footer__controlsProgress">
+                <div class="footer__timer" id="timer">0:00</div>
+                <div class="footer__waveform" id="waveform"></div>
+                <div class="footer__line">
+                  <div class="footer__bar" id="bar"></div>
+                  <div class="footer__progress" id="progress"></div>
+                </div>
+                <div class="footer__duration" id="duration">0:00</div>
               </div>
             </div>
-          </div> -->
+          </div>
 
-    <!-- Volume -->
-    <!-- <div class="player__volume">
-            <svg class="player__icon" width="16" height="16" aria-hidden="true">
-              <use xlink:href="./imagess/sprite.svg#speakerLow"></use>
+          <!-- Volume -->
+          <div class="footer__volume">
+            <svg class="footer__icon" width="16" height="16" aria-hidden="true">
+              <use href="./images/sprite.svg#speakerLow"></use>
             </svg>
-            <div class="player__progress-track">
+            <div class="footer__progress-track">
               <input
                 type="range"
-                class="player__volume-slider"
+                class="footer__volume-slider"
                 min="0"
                 max="100"
                 value="10"
                 id="volume"
               />
-              <div class="player__progressBar" id="progressBar"></div>
+              <div class="footer__progressBar" id="progressBar"></div>
             </div>
           </div>
         </div>
-      </div> -->
-    <!-- </footer> -->
+      </div>
+    </footer>
     <script src="./ts/main.ts" type="module"></script>
     <script src="./howler.core.js"></script>
     <!-- <script src="./siriwave.js"></script>

@@ -1,19 +1,31 @@
 @use "../global/mixins" as *;
 @use "../global/variables" as *;
 
-
 .catalog {
+  display: flex;
+ // flex: 1 0 auto; 
+   flex-grow: 1;
+    min-height: calc(100vh - 169px); /* 120px = сумма высот шапки и футера */
+  // height: 100vh;    
+  // overflow-y: auto;   
+
 
   @include vp-767 {
-  background-color: $color-whisper;
+    background-color: $color-whisper;
   }
 
   &__wrapper {
     height: 100%;
     margin: 0px -30px;
     display: grid;
-    grid-template-columns: 289px 1fr;
-    
+    grid-template-columns: 289px 1074px;
+    gap: 46px;
+    padding: 0;
+
+    @media (max-width: 1392px) {
+      grid-template-columns: 289px 1fr;
+    }
+
     @include vp-1023 {
       display: flex;
       flex-direction: column;
@@ -25,19 +37,22 @@
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 14px;
+      padding: 20px 0 0;
     }
   }
 
   &__wrapper-center {
-    padding: 35px 0 0 46px;
-  
-      @include vp-1023 {
-        padding: 35px 0 0;
+   
+    padding: 35px 0 0;
+    margin: 0 0 43px;
+
+    @include vp-1023 {
+      padding: 0;
     }
 
     @include vp-767 {
-      display: none;
+      padding: 0;
     }
   }
 
