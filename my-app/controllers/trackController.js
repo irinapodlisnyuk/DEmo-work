@@ -17,7 +17,7 @@ const addToFavorites = (req, res) => {
   // res.json({ message: "композиция добавлена в избранное" });
 
   // Можно сохранять в базу строку вида "track_1" или "podcast_1"
-  const addId = `${type}_${trackId}`;
+  const addId = `${type}-${trackId}`;
   User.addFavorite(username,  addId);
 
   res.json({ message: "Добавлено в избранное" });
@@ -29,7 +29,7 @@ const removeFromFavorites = (req, res) => {
 
   //User.removeFavorite(username, trackId);
 
-  const removeId = `${type}_${trackId}`;
+  const removeId = `${type}-${trackId}`;
   User.removeFavorite(username, removeId);
 
   res.json({ message: "композиция убрана из избранного" });
@@ -52,7 +52,7 @@ const getFavorites = (req, res) => {
 
   favoriteIds.forEach(favId => {
     // Разделяем строку обратно на тип и id
-    const [type, id] = favId.split('_'); 
+    const [type, id] = favId.split('-'); 
     const numericId = Number(id);
 
     if (type === 'track') {

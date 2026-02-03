@@ -1,141 +1,115 @@
-import { Howl } from 'howler';
+import { Howl } from "howler";
+import { AudioItem } from "../tableList/typesTracks";
 
-export function audioPlayer() {
+class PlayerService {
+  private sound: Howl | null = null;
+  private currentIndex: number = -1;
+  private playlist: AudioItem[] = [];
 
-class AudioPlayer {
-    private sound: Howl;
+  public isLoop: boolean = false;
+  public isShuffle: boolean = false;
 
-    constructor(src: string) {
-        this.sound = new Howl({
-            src: [src],
-            html5: true, // Рекомендуется для больших аудиофайлов
-            onplay: () => this.updateStatus('Воспроизведение...'),
-            onpause: () => this.updateStatus('Пауза'),
-            onstop: () => this.updateStatus('Остановлено'),
-            onend: () => this.updateStatus('Завершено')
-        });
+  // Метод запуска трека
+  public playTrack(index: number, currentList: AudioItem[]) {
+    this.playlist = currentList;
+    this.currentIndex = index;
+    const item = this.playlist[index];
+
+    if (this.sound) this.sound.unload();
+
+    // Собираем URL: http://localhost:8000/ + audio/podcast-1.mp3
+    const fileUrl = `http://localhost:8000/${item.encoded_audio}`;
+
+    this.sound = new Howl({
+      src: [fileUrl],
+      html5: true, // Важно для длинных подкастов
+      autoplay: true,
+      onplay: () => this.updateUI(),
+      onend: () => this.next(),
+    });
+  }
+
+  public setVolume(val: number) {
+    // Переводим 0-100 в 0.0-1.0
+    const volume = val / 100;
+
+    if (this.sound) {
+      this.sound.volume(volume);
     }
 
-    public play(): void {
-        if (!this.sound.playing()) {
-            this.sound.play();
-        }
-    }
+    // Сохраняем значение, чтобы новые треки запускались с той же громкостью
+    Howler.volume(volume);
+  }
 
-    public pause(): void {
-        this.sound.pause();
-    }
+  public togglePlay() {
+    if (!this.sound) return;
+    this.sound.playing() ? this.sound.pause() : this.sound.play();
+  }
 
-    private updateStatus(text: string): void {
-        const statusEl = document.getElementById('status');
-        if (statusEl) statusEl.innerText = text;
+  public next() {
+    let nextIndex = this.currentIndex + 1;
+    if (this.isShuffle) {
+      nextIndex = Math.floor(Math.random() * this.playlist.length);
+    } else if (nextIndex >= this.playlist.length) {
+      nextIndex = 0;
     }
+    this.playTrack(nextIndex, this.playlist);
+  }
+
+  public prev() {
+    let prevIndex = this.currentIndex - 1;
+    if (prevIndex < 0) prevIndex = this.playlist.length - 1;
+    this.playTrack(prevIndex, this.playlist);
+  }
+
+  public toggleLoop() {
+    this.isLoop = !this.isLoop;
+    if (this.sound) this.sound.loop(this.isLoop);
+    return this.isLoop;
+  }
+
+  public toggleShuffle() {
+    this.isShuffle = !this.isShuffle;
+    return this.isShuffle;
+  }
+
+  public skip(seconds: number) {
+    if (!this.sound) return;
+    const currentPos = this.sound.seek() as number;
+    this.sound.seek(currentPos + seconds);
+  }
+
+  public seekToPercent(percent: number) {
+    if (!this.sound) return;
+    const duration = this.sound.duration();
+    this.sound.seek(duration * percent);
+  }
+
+  // Получение текущего прогресса для прогресс-бара
+  public getProgress() {
+    if (!this.sound) return { percent: 0, current: 0, total: 0 };
+    const current = this.sound.seek() as number;
+    const total = this.sound.duration();
+    return {
+      percent: (current / total) * 100,
+      current: current,
+      total: total,
+    };
+  }
+
+  private updateUI() {
+    const track = this.playlist[this.currentIndex];
+    const titleEl = document.getElementById("player-title");
+    const artistEl = document.getElementById("player-artist");
+
+    if (titleEl) titleEl.innerText = track.title;
+
+    if (artistEl) {
+      // Безопасно определяем автора в зависимости от типа медиафайла
+      const author = track.type === "track" ? track.artist : track.host;
+      artistEl.innerText = author || "Unknown";
+    }
+  }
 }
 
-// Инициализация
-const player = new AudioPlayer('https://www.soundhelix.com');
-
-document.getElementById('playBtn')?.addEventListener('click', () => player.play());
-document.getElementById('pauseBtn')?.addEventListener('click', () => player.pause());
-
-
-// this.sound.volume(0.5); — установка громкости (0.0 - 1.0).
-// this.sound.seek(30); — перемотка на 30-ю секунду.
-// this.sound.unload(); — полная выгрузка файла из памяти (полезно при смене треков).
-}
-
-// import { Howl } from 'howler';
-
-// // Класс для управления плеером
-// class AudioPlayer {
-//     private sound: Howl;
-//     private playButton: HTMLButtonElement;
-//     private pauseButton: HTMLButtonElement;
-//     private progressSlider: HTMLInputElement;
-//     private durationDisplay: HTMLSpanElement;
-
-//     constructor(audioUrl: string, playBtnId: string, pauseBtnId: string, sliderId: string, durationId: string) {
-//         // Создаем экземпляр Howl
-//         this.sound = new Howl({
-//             src: [audioUrl], // Массив URL для разных форматов
-//             html5: true, // Использовать HTML5 Audio для надежности
-//             onplay: () => {
-//                 console.log('Аудио играет!');
-//                 this.updateProgress();
-//             },
-//             onpause: () => {
-//                 console.log('Аудио поставлено на паузу.');
-//             },
-//             onend: () => {
-//                 console.log('Аудио закончено.');
-//                 this.resetPlayer();
-//             },
-//             onloaderror: (id, error) => {
-//                 console.error(`Ошибка загрузки аудио: ${error}`);
-//             }
-//         });
-
-//         // Инициализация UI элементов
-//         this.playButton = document.getElementById(playBtnId) as HTMLButtonElement;
-//         this.pauseButton = document.getElementById(pauseBtnId) as HTMLButtonElement;
-//         this.progressSlider = document.getElementById(sliderId) as HTMLInputElement;
-//         this.durationDisplay = document.getElementById(durationId) as HTMLSpanElement;
-
-//         this.setupEventListeners();
-//         this.updateDuration();
-//     }
-
-//     private setupEventListeners(): void {
-//         this.playButton.addEventListener('click', () => this.play());
-//         this.pauseButton.addEventListener('click', () => this.pause());
-//         this.progressSlider.addEventListener('input', (e) => {
-//             const seekTime = parseFloat((e.target as HTMLInputElement).value);
-//             this.seek(seekTime);
-//         });
-//     }
-
-//     play(): void {
-//         this.sound.play();
-//         this.updateUIState();
-//     }
-
-//     pause(): void {
-//         this.sound.pause();
-//         this.updateUIState();
-//     }
-
-//     seek(time: number): void {
-//         this.sound.seek(time);
-//     }
-
-//     stop(): void {
-//         this.sound.stop();
-//         this.resetPlayer();
-//     }
-
-//     private updateDuration(): void {
-//         const duration = this.sound.duration();
-//         if (duration) {
-//             this.progressSlider.max = duration.toString();
-//             this.durationDisplay.textContent = this.formatTime(duration);
-//         }
-//     }
-
-//     private updateProgress(): void {
-//         // Обновляем ползунок и время, пока играет
-//         const interval = setInterval(() => {
-//             if (this.sound.playing()) {
-//                 const currentTime = this.sound.seek();
-//                 this.progressSlider.value = currentTime.toString();
-//                 this.durationDisplay.textContent = `${this.formatTime(currentTime)} / ${this.formatTime(this.sound.duration())}`;
-//             } else {
-//                 clearInterval(interval);
-//             }
-//         }, 500); // Обновляем каждую 500ms
-//     }
-
-//     private updateUIState(): void {
-//         // Логика для управления видимостью кнопок play/pause (
-//     }
-
-// }
+export const player = new PlayerService();

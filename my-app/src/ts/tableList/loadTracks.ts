@@ -1,5 +1,5 @@
 import ResizeObserver from "resize-observer-polyfill";
-import "../scss/blocks/_scrollbar.scss";
+import "../../scss/blocks/_scrollbar.scss";
 import "simplebar/dist/simplebar.css";
 
 window.ResizeObserver = ResizeObserver;
@@ -46,7 +46,7 @@ console.log("Отображаем треков:", displayTracks.length);
   const renderBatch = (page: number, append = false) => {
     const start = (page - 1) * itemsPerPage;
     const batch = displayTracks.slice(start, start + itemsPerPage);
-    const rows = batch.map((item, index) => createRow(item, start + index));
+    const rows = batch.map((item, index) => createRow(item, start + index, displayTracks));
 
     if (append) {
       rows.forEach((row) => mount(container, row));

@@ -1,6 +1,6 @@
 import { el, svg, setChildren } from "redom";
-import spritePath from "../images/sprite.svg";
-import userPhoto from '../images/Avatar.png';
+import spritePath from "../../images/sprite.svg";
+import userPhoto from '../../images/avatar.png';
 
 export function cardUser() {
   const currentUserName = localStorage.getItem("username") || "Гость";

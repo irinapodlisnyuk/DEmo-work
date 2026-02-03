@@ -3,6 +3,7 @@ export interface Track {
   title: string;
   artist: string;
   duration: number;
+  createdAt:string;
   size_mb: number;
   encoded_audio: string;
 }
@@ -12,6 +13,7 @@ export interface Podcast {
   title: string;
   host: string;
   duration: number;
+  createdAt: string;
   size_mb: number;
   category: string;
   description: string;

@@ -936,10 +936,36 @@ button {
   padding: 8px 16px;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color ease-in 0.3s, color ease-in 0.3s;
+}
+@media (max-width: 1023px) {
+  .catalog__pagination-btn {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .catalog__pagination-btn {
+    display: none;
+  }
+}
+@media (max-width: 1023px) {
+  .catalog__pagination-btn .pagination-dots {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .catalog__pagination-btn .pagination-dots {
+    display: none;
+  }
 }
 .catalog__pagination-btn.active {
   color: #FC6D3E;
   font-weight: bold;
+}
+.catalog__pagination-btn:hover, .catalog__pagination-btn:focus {
+  background-color: #FC6D3E;
+  color: #ffffff;
+  border-radius: 5px;
 }
 
 .user-card {
