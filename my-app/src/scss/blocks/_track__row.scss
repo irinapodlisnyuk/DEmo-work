@@ -2,7 +2,7 @@
 @use "../global/variables" as *;
 
 #tracks-tbody {
- // min-height: calc(100vh - 100px);
+  // min-height: calc(100vh - 100px);
 
   @include vp-767 {
     display: flex;
@@ -15,7 +15,7 @@
       display: block;
       height: 140px;
     }
-   }
+  }
 }
 
 .track-row {
@@ -157,8 +157,7 @@
     }
   }
 
-  .fav-btn,
-  .more-btn {
+  .fav-btn {
     width: 24px;
     height: 24px;
     border: transparent;
@@ -166,7 +165,7 @@
     position: relative;
     padding: 0;
 
-    svg{
+    svg {
       width: 100%;
       height: 100%;
     }
@@ -179,9 +178,27 @@
       color: $color-white;
       stroke: $color-burnt-orange;
       stroke-width: 1px;
+
+      &__icon {
+        color: $color-burnt-orange;
+      }
     }
 
-    .more-btn__icon {
+    &.active {
+      .fav-btn__icon {
+        color: $color-burnt-orange; // розовый/красный цвет
+      }
+    }
+  }
+  .more-btn {
+    width: 24px;
+    height: 24px;
+    border: transparent;
+    background-color: transparent;
+    position: relative;
+    padding: 0;
+
+    &__icon {
       stroke: none;
 
       @include vp-767 {

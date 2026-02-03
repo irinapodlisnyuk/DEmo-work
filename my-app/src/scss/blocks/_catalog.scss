@@ -43,9 +43,9 @@
   }
 
   &__wrapper-center {
-   
+   overflow-y: auto;
     padding: 35px 0 0;
-    margin: 0 0 43px;
+    margin: 0 0 23px;
 
     @include vp-1023 {
       padding: 0;

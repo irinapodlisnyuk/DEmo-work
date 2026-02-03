@@ -204,8 +204,8 @@
                   <thead class="catalog__table-title">
                     <tr class="catalog__table-list">
                       <th class="catalog__table-item">№</th>
-                      <th class="catalog__table-item">НАЗВАНИЕ</th>
-                      <th class="catalog__table-item">АЛЬБОМ</th>
+                      <th class="catalog__table-item" data-sort="title">НАЗВАНИЕ</th>
+                      <th class="catalog__table-item" data-sort="artist">АЛЬБОМ</th>
                       <th class="catalog__table-item">
                         <svg
                           class="catalog__table-icon"
@@ -216,7 +216,7 @@
                           <use href="./images/sprite.svg#calendar"></use>
                         </svg>
                       </th>
-                      <th class="catalog__table-title">
+                      <th class="catalog__table-item" data-sort="duration">
                         <svg
                           class="catalog__table-icon"
                           width="16"
@@ -514,7 +514,7 @@
         </div>
       </div>
     </footer>
-    <script src="./ts/main.ts" type="module"></script>
+    <!-- <script src="./ts/main.ts" type="module"></script> -->
     <script src="./howler.core.js"></script>
     <!-- <script src="./siriwave.js"></script>
     <script src="./player.js" type="module"></script> -->

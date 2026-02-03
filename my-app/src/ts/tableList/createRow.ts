@@ -2,33 +2,61 @@ import { el, svg } from "redom";
 import { AudioItem } from "./typesTracks";
 import { formatTime } from "../utils/formatTime";
 import spritePath from "../images/sprite.svg";
+import { getFavorites} from "./favoritesTrack";
+import { toggleFavorite} from "./toggleFavorite";
 
 export function createRow(item: AudioItem, index: number) {
+  const heartIcon = svg(
+    "svg",
+    { class: "fav-btn__icon", width: "24", height: "24" },
+    svg("use", { href: `${spritePath}#heart` }),
+  );
 
-    const heartIcon = svg(
-      "svg",
-      { class: "fav-btn__icon", width: "24", height: "24" },
-      svg("use", { href: `${spritePath}#heart` }),
-    );
+  const pointsIcon = svg(
+    "svg",
+    { class: "more-btn__icon", width: "24", height: "24" },
+    svg("use", { href: `${spritePath}#points-desktop` }),
+  );
 
-    const pointsIcon = svg(
-      "svg",
-      { class: "more-btn__icon", width: "24", height: "24" },
-      svg("use", { href: `${spritePath}#points-desktop` }),
-    );
+  const favorites = getFavorites();
 
-  const author = item.type === "track" ? item.artist : item.host;
-  const trackImg = item.type === "track" 
-    ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png` 
-    : "./images/img-audio/placeholder.png";
+ const itemKey: string = `${item.type}-${item.id}`; 
+const isFavorite = favorites.includes(itemKey);
 
-  return el("tr.track-row", [
+const favBtn = el(
+  "button", 
+  {
+    // Формируем строку классов заранее: либо "fav-btn active", либо просто "fav-btn"
+    className: isFavorite ? "fav-btn active" : "fav-btn", 
+    onclick: async (e: Event) => {
+      e.stopPropagation();
+      
+      const wasFavorite = favBtn.classList.contains("active");
+      // Отправляем запрос на сервер
+      const success = await toggleFavorite(item.id, item.type, wasFavorite);
+      if (success) {
+        // classList.toggle работает с ОДНИМ словом, поэтому тут ошибки не будет
+        favBtn.classList.toggle("active");
+      }
+    },
+  },
+  [heartIcon]
+);
+
+ const author  = (item.type === "track" ? item.artist : item.host) || "Unknown";
+  const trackImg =
+    item.type === "track"
+      ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : "./images/img-audio/placeholder.png";
+
+  return el("tr.track-row",  { "data-id": item.id }, [
     el("td.track-row__num", index + 1),
     el("td.track-row__info", [
       el("div.track-wrapper", [
-        el("img.track-img", { 
-            src: trackImg, 
-            onerror: (e: any) => e.target.src = "./images/img-audio/track-icon.png" 
+        el("img.track-img", {
+          src: trackImg,
+          onerror: (e: Event) =>
+            ((e.target as HTMLImageElement).src = "./images/img-audio/track-icon.png"),
         }),
         el("div.track-text", [
           el("div.track-title", item.title),
@@ -38,12 +66,10 @@ export function createRow(item: AudioItem, index: number) {
     ]),
     el("td.track-row__album", item.type === "track" ? item.artist : "-"),
     el("td.track-row__date", "2 дня назад"),
-    el("td.track-row__heart", [
-      el("button.fav-btn", [heartIcon])
-    ]),
+    el("td.track-row__heart", favBtn),
     el("td.track-row__actions", formatTime(item.duration)),
     el("td.track-row__more", [
-      el("button.more-btn", [svg("svg", [pointsIcon])])
+      el("button.more-btn",  [pointsIcon]),
     ]),
   ]);
 }
@@ -68,7 +94,7 @@ export function createRow(item: AudioItem, index: number) {
 //     onclick: () => {
 //       console.log(`Играем: ${item.title} (ID: ${item.id})`);
 //       // Здесь вызывайте вашу функцию плеера, например:
-//       // playTrack(item); 
+//       // playTrack(item);
 //     }
 //   }, [
 //     el("td.track-row__num", index + 1),
@@ -87,25 +113,25 @@ export function createRow(item: AudioItem, index: number) {
 //     el("td.track-row__album", item.type === "track" ? item.artist : "-"),
 //     el("td.track-row__date", "2 дня назад"),
 //     el("td.track-row__heart", [
-//       el("button.fav-btn", { 
+//       el("button.fav-btn", {
 //         type: "button",
 //         onclick: (e: Event) => {
 //           e.stopPropagation(); // Чтобы не срабатывал клик по всей строке (Play)
 //           console.log("Добавлено в избранное:", item.id);
 //         }
 //       }, [
-//         svg("svg", { class: "fav-btn__icon", width: "24", height: "24" }, 
+//         svg("svg", { class: "fav-btn__icon", width: "24", height: "24" },
 //           svg("use", { href: `${spritePath}#heart` })
 //         )
 //       ]),
 //     ]),
 //     el("td.track-row__actions", formatTime(item.duration)),
 //     el("td.track-row__more", [
-//       el("button.more-btn", { 
+//       el("button.more-btn", {
 //         type: "button",
 //         onclick: (e: Event) => e.stopPropagation() // Не даем играть трек при нажатии на "Меню"
 //       }, [
-//         svg("svg", { class: "more-btn__icon", width: "24", height: "24" }, 
+//         svg("svg", { class: "more-btn__icon", width: "24", height: "24" },
 //           svg("use", { href: `${spritePath}#points-desktop` })
 //         )
 //       ]),
@@ -114,7 +140,6 @@ export function createRow(item: AudioItem, index: number) {
 
 //   return row;
 // }
-
 
 // import { formatTime } from "../utils/formatTime";
 // import spritePath from "../images/sprite.svg";
@@ -125,7 +150,6 @@ export function createRow(item: AudioItem, index: number) {
 // export async function createTrackRow() {
 //   const items: AudioItem[] = await getAllAudio();
 //   const container = document.getElementById("tracks-tbody") as HTMLElement;
-
 
 //   const elements = items.map((item: AudioItem, index: number) => {
 //     const author = item.type === "track" ? item.artist : item.host;
@@ -195,5 +219,3 @@ export function createRow(item: AudioItem, index: number) {
 
 //   setChildren(container, elements);
 // }
-
-

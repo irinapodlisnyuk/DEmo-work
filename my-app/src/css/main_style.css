@@ -698,8 +698,9 @@ button {
   }
 }
 .catalog__wrapper-center {
+  overflow-y: auto;
   padding: 35px 0 0;
-  margin: 0 0 43px;
+  margin: 0 0 23px;
 }
 @media (max-width: 1023px) {
   .catalog__wrapper-center {
@@ -930,6 +931,7 @@ button {
 }
 
 .catalog__pagination-btn {
+  background-color: transparent;
   border: transparent;
   padding: 8px 16px;
   cursor: pointer;
@@ -1520,8 +1522,7 @@ button {
     display: none;
   }
 }
-.track-row .fav-btn,
-.track-row .more-btn {
+.track-row .fav-btn {
   width: 24px;
   height: 24px;
   border: transparent;
@@ -1529,13 +1530,11 @@ button {
   position: relative;
   padding: 0;
 }
-.track-row .fav-btn svg,
-.track-row .more-btn svg {
+.track-row .fav-btn svg {
   width: 100%;
   height: 100%;
 }
-.track-row .fav-btn__icon,
-.track-row .more-btn__icon {
+.track-row .fav-btn__icon {
   cursor: pointer;
   position: absolute;
   top: 0;
@@ -1544,13 +1543,25 @@ button {
   stroke: #FC6D3E;
   stroke-width: 1px;
 }
-.track-row .fav-btn .more-btn__icon,
-.track-row .more-btn .more-btn__icon {
+.track-row .fav-btn__icon__icon {
+  color: #FC6D3E;
+}
+.track-row .fav-btn.active .fav-btn__icon {
+  color: #FC6D3E;
+}
+.track-row .more-btn {
+  width: 24px;
+  height: 24px;
+  border: transparent;
+  background-color: transparent;
+  position: relative;
+  padding: 0;
+}
+.track-row .more-btn__icon {
   stroke: none;
 }
 @media (max-width: 767px) {
-  .track-row .fav-btn .more-btn__icon,
-  .track-row .more-btn .more-btn__icon {
+  .track-row .more-btn__icon {
     width: 17px;
     height: 17px;
   }
