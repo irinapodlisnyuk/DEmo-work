@@ -27,11 +27,6 @@ export async function navigate(cardName?: string) {
         break;
       }
 
-    //   case "main": {
-    //     const { default: createMainPage}   = await import("./createmainPage");
-    //     createMainPage(appEl);
-    //     break;
-    //   }
       default: {
         const { default: createHomeCard } = await import("./createHomeCard");
         createHomeCard(appEl);
@@ -40,7 +35,7 @@ export async function navigate(cardName?: string) {
   } catch (error) {
     console.error("Ошибка при загрузке страницы:", error);
   } finally {
-    // Удаляем лоадер в любом случае (успех или ошибка)
+
     loaderEl.remove();
   }
 }

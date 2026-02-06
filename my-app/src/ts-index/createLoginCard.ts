@@ -10,20 +10,16 @@ export default function createLoginCard(containerEl: HTMLElement) {
     private passwordInput: HTMLInputElement;
 
     constructor() {
-      // Создаем элементы. В Redom вторым аргументом идет объект свойств.
       this.el = el(
         "form.form__login",
-        // {
-        //   onsubmit: (e: Event) => this.handleSubmit(e),
-        // },
 
         { autocomplete: "on" },
         [
           el(".form__group", [
             (this.emailInput = el("input.custom-input", {
-              name: "username", // Теперь это username
+              name: "username",
               id: "login-username",
-              type: "text", 
+              type: "text",
               placeholder: "Имя",
               required: true,
               autocomplete: "username",
@@ -44,34 +40,10 @@ export default function createLoginCard(containerEl: HTMLElement) {
         ],
       );
     }
-
-    // private handleSubmit(e: Event): void {
-    //   e.preventDefault();
-    //   const data: LoginData = {
-    //     email: this.emailInput.value,
-    //     password: this.passwordInput.value,
-
-    //     // alert("Вход в аккаунт")
-    //   };
-
-    //   console.log("Вход выполнен, перенаправление в кабинет музыки...");
-    //   //   navigate("main");
-    //   // 1. Успешная проверка (например, поля не пустые)
-    //   if (this.emailInput.value && this.passwordInput.value) {
-    //     console.log("Данные верны. Переход в кабинет ...");
-
-    //     // 2. Переход на физическую страницу main.html
-    //     window.location.href = "main.html";
-    //   } else {
-    //       validateForm();
-    //     alert("Пожалуйста, введите логин и пароль");
-    //   }
-    // }
   }
 
   const cardTitle = el("h2.card__title", "Вход в аккаунт");
 
-  // 2. Инициализируем форму (берем regForm.el, так как это экземпляр класса)
   const regForm = new LoginForm();
 
   const homeLinkEl = el("a.card__link", { href: "#" }, "На главную");
@@ -91,8 +63,6 @@ export default function createLoginCard(containerEl: HTMLElement) {
 
   // Мы передаем regForm.el (узел DOM), а не сам объект класса
   setChildren(divCardEl, [cardTitle, regForm.el, divWrapCardEl]);
-
-  // 5. Очищаем контейнер перед добавлением (если navigate этого не сделал)
 
   containerEl.innerHTML = "";
   containerEl.append(divCardEl);

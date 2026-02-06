@@ -1,6 +1,5 @@
 import { loadTracks } from "./loadTracks";
 
-// Выбор списка треков: все или избранные
 export function filterTracks() {
   
   const tracksAll = document.getElementById("all-audio");

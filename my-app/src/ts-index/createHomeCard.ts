@@ -3,8 +3,7 @@ import { el, setChildren } from "redom";
 import { navigate } from "./navigate";
 
 export default function createHomeCard(containerEl: HTMLElement) {
-  // 1. Создаем заголовок
-
+ 
   const divCardEl = el(".card");
   const cardTitle = el("h2.card__title", "Добро пожаловать на сайт");
   const cardText = el(

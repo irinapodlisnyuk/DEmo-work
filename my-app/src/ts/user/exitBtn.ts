@@ -3,6 +3,6 @@ export function exitBtn() {
   exitBtn?.addEventListener("click", (e) => {
     e.preventDefault();
     localStorage.clear(); 
-    window.location.href = "index.html"; // На страницу логина
+    window.location.href = "index.html"; 
   });
 }

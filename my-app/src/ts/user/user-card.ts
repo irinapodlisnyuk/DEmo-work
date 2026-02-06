@@ -9,16 +9,13 @@ export function cardUser() {
   if (!headerCard) return; // Защита от ошибки, если контейнер не найден
 
   headerCard.classList.add("user-card");
-  headerCard.innerHTML = ''; // Очищаем перед рендером, если нужно
+  headerCard.innerHTML = '';
 
-  // 1. Создаем иконку закрытия
   const closeIcon = svg("svg", { class: "user-card__icon", width: "24", height: "24" },
     svg("use", { href: `${spritePath}#icon-close` })
   );
 
-  // 2. Описываем структуру в декларативном стиле RE|DOM
   const cardEl = el(".user-card__wrapper", [
-    // Хедер карточки
     el(".user-card__heading", [
       el("button.user-card__close", { type: "button" }, [closeIcon]),
       el("h2.user-card__title",  currentUserName),

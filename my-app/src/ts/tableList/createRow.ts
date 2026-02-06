@@ -6,6 +6,7 @@ import { getFavorites } from "./favoritesTrack";
 import { toggleFavorite } from "./toggleFavorite";
 import { player } from "../player/player";
 import { getRelativeTime } from "../../utils/formatDate";
+import { setupTooltip, tooltipContent } from "../tippy";
 
 export function createRow(
   item: AudioItem,
@@ -49,9 +50,10 @@ export function createRow(
     [heartIcon],
   );
 
-  //1. Получаем дату из объекта (или ставим текущую, если её нет в API)
-  const dateAdded = item.createdAt ? getRelativeTime(item.createdAt) : "Неизвестно";
- 
+  // Получаем дату из объекта (или ставим текущую, если её нет в API)
+  const dateAdded = item.createdAt
+    ? getRelativeTime(item.createdAt)
+    : "Неизвестно";
 
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
   const trackImg =
@@ -59,13 +61,24 @@ export function createRow(
       ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
       : "./images/img-audio/placeholder.png";
 
+  const moreBtn = el(
+    "button.tippy__btn",
+    {
+      onclick: (e: Event) => e.stopPropagation(), // Чтобы не запускался плеер
+    },
+    [pointsIcon],
+  );
+    // Генерируем контент
+  const tooltipCont = tooltipContent (item.title, author);
+
+  //  Инициализируем тултип через наш модуль
+  setupTooltip(moreBtn, tooltipCont);
+
   const row = el(
     "tr.track-row",
     {
       "data-id": item.id,
       onclick: () => {
-        // Предположим, у item есть поле file
-        // const audioUrl = `http://localhost:8000/${item.encoded_audio}`;
         player.playTrack(index, currentList);
       },
     },
@@ -88,10 +101,10 @@ export function createRow(
       el("td.track-row__album", item.type === "track" ? item.artist : "-"),
       el("td.track-row__date", dateAdded),
       el("td.track-row__heart", favBtn),
+
       el("td.track-row__actions", formatTime(item.duration)),
-      el("td.track-row__more", [el("button.tooltip__btn", [pointsIcon])]),
+      el("td.track-row__more", moreBtn),
     ],
   );
   return row;
 }
-

@@ -180,6 +180,12 @@
     }
   }
 
+  &__controlsOuter {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
   /* Loading */
   #loading {
     position: absolute;
@@ -366,6 +372,7 @@
     gap: 9px;
     margin: 0 0 18px;
     align-items: center;
+    cursor: pointer;
 
     @media (max-width: 1382px) {
     }

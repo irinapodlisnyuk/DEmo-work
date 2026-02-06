@@ -39,15 +39,6 @@ export async function loadTracks() {
   )?.checked;
   const favIds = JSON.parse(localStorage.getItem("favorite_tracks") || "[]");
 
-  // КЛЮЧЕВОЙ МОМЕНТ: displayTracks всегда должен вычисляться заново
-  // const displayTracks = isFavActive
-  //   ? state.allTracks.filter((t) => {
-  //       const currentKey = `${t.type}-${t.id}`;
-  //       return favIds.some(
-  //         (favId: string) => String(favId) === String(currentKey),
-  //       );
-  //     })
-  
   // 3. Вычисляем displayTracks с учетом ТРЕХ условий: база, избранное и ПОИСК
 const displayTracks = state.allTracks.filter((t) => {
   // Проверка на Избранное
@@ -93,7 +84,7 @@ const displayTracks = state.allTracks.filter((t) => {
     ) as HTMLElement;
     const isDesktop = window.innerWidth > 1023;
 
-    container.innerHTML = ""; // Очистка один раз в начале
+    container.innerHTML = "";
 
     // Проверка на пустоту
     if (displayTracks.length === 0) {

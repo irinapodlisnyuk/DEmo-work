@@ -35,7 +35,8 @@
     "navigo": "^8.11.1",
     "redom": "^4.3.0",
     "resize-observer-polyfill": "^1.5.1",
-    "simplebar": "^6.3.3"
+    "simplebar": "^6.3.3",
+    "tippy.js": "^6.3.7"
   },
   "devDependencies": {
     "concurrently": "^9.2.1",
