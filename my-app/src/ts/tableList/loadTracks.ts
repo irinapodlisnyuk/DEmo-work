@@ -5,7 +5,7 @@ import "simplebar/dist/simplebar.css";
 window.ResizeObserver = ResizeObserver;
 
 import { getAllAudio } from "./getAllAudio";
-import { setChildren, mount} from "redom";
+import { setChildren, mount } from "redom";
 import { renderPagination } from "./renderPagination";
 import { createRow } from "./createRow";
 import { initSorting } from "./sorting";
@@ -13,7 +13,6 @@ import { state } from "./state";
 
 const itemsPerPage = 4;
 export async function loadTracks() {
-
   if (state.allTracks.length === 0) {
     const data = await getAllAudio();
     state.allTracks = data; // ПРОВЕРЬ: записываешь ли ты данные в стейт?
@@ -21,24 +20,50 @@ export async function loadTracks() {
 
     initSorting(
       () => state.allTracks,
-      (newTracks) => { state.allTracks = newTracks; },
-      () => loadTracks()
+      (newTracks) => {
+        state.allTracks = newTracks;
+      },
+      () => loadTracks(),
     );
   }
+  
+    // 1. Берем поисковый запрос из инпута поиска
+  const searchInput = document.getElementById(
+    "search-input",
+  ) as HTMLInputElement;
+  const query = searchInput?.value.trim().toLowerCase() || "";
 
-  // 2. Получаем актуальные фильтры
-  const isFavActive = (document.getElementById("radio-favorites") as HTMLInputElement)?.checked;
+  // 1. Получаем актуальные фильтры
+  const isFavActive = (
+    document.getElementById("radio-favorites") as HTMLInputElement
+  )?.checked;
   const favIds = JSON.parse(localStorage.getItem("favorite_tracks") || "[]");
 
   // КЛЮЧЕВОЙ МОМЕНТ: displayTracks всегда должен вычисляться заново
- const displayTracks = isFavActive
-  ? state.allTracks.filter((t) => {
-      const currentKey = `${t.type}-${t.id}`;
-      return favIds.some((favId: string) => String(favId) === String(currentKey));
-    })
-  : [...state.allTracks];
+  // const displayTracks = isFavActive
+  //   ? state.allTracks.filter((t) => {
+  //       const currentKey = `${t.type}-${t.id}`;
+  //       return favIds.some(
+  //         (favId: string) => String(favId) === String(currentKey),
+  //       );
+  //     })
+  
+  // 3. Вычисляем displayTracks с учетом ТРЕХ условий: база, избранное и ПОИСК
+const displayTracks = state.allTracks.filter((t) => {
+  // Проверка на Избранное
+  const isFav = favIds.some((favId: string) => String(favId) === `${t.type}-${t.id}`);
+  if (isFavActive && !isFav) return false;
 
-console.log("Отображаем треков:", displayTracks.length);
+  // Проверка на Поиск (название или автор)
+  const author = (t.type === "track" ? t.artist : t.host).toLowerCase();
+  const title = t.title.toLowerCase();
+  const matchesSearch = title.includes(query) || author.includes(query);
+
+  return matchesSearch;
+});
+
+  console.log("Отображаем треков:", displayTracks.length);
+
   const container = document.getElementById("tracks-tbody") as HTMLElement;
   if (!container) return;
 
@@ -46,7 +71,9 @@ console.log("Отображаем треков:", displayTracks.length);
   const renderBatch = (page: number, append = false) => {
     const start = (page - 1) * itemsPerPage;
     const batch = displayTracks.slice(start, start + itemsPerPage);
-    const rows = batch.map((item, index) => createRow(item, start + index, displayTracks));
+    const rows = batch.map((item, index) =>
+      createRow(item, start + index, displayTracks),
+    );
 
     if (append) {
       rows.forEach((row) => mount(container, row));
@@ -58,18 +85,24 @@ console.log("Отображаем треков:", displayTracks.length);
 
   // 4. Отрисовка
   function renderUI() {
-    const pagContainer = document.querySelector(".catalog__pagination") as HTMLElement;
-    const scrollWrapper = document.querySelector(".tracks-scroll") as HTMLElement;
+    const pagContainer = document.querySelector(
+      ".catalog__pagination",
+    ) as HTMLElement;
+    const scrollWrapper = document.querySelector(
+      ".tracks-scroll",
+    ) as HTMLElement;
     const isDesktop = window.innerWidth > 1023;
 
     container.innerHTML = ""; // Очистка один раз в начале
 
     // Проверка на пустоту
     if (displayTracks.length === 0) {
-      const message = isFavActive ? "У вас пока нет избранных треков" : "Список треков пуст";
-      container.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px;">${message}</td></tr>`;
+      const message = isFavActive
+        ? "У вас пока нет избранных треков"
+        : "Список треков пуст";
+      container.innerHTML = `<tr><td colspan="7" style="text-align:center; padding: 40px; color: #FC6D3E">${message}</td></tr>`;
       if (pagContainer) pagContainer.style.display = "none";
-      return; 
+      return;
     }
 
     if (!isDesktop) {
@@ -78,12 +111,19 @@ console.log("Отображаем треков:", displayTracks.length);
       const initLazyLoad = (page: number) => {
         const lastRowEl = renderBatch(page, page > 1);
         if (lastRowEl && page * itemsPerPage < displayTracks.length) {
-          const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-              observer.unobserve(lastRowEl);
-              initLazyLoad(page + 1);
-            }
-          }, { root: scrollWrapper, rootMargin: "0px 0px 120px 0px", threshold: 0.1 });
+          const observer = new IntersectionObserver(
+            (entries) => {
+              if (entries[0].isIntersecting) {
+                observer.unobserve(lastRowEl);
+                initLazyLoad(page + 1);
+              }
+            },
+            {
+              root: scrollWrapper,
+              rootMargin: "0px 0px 120px 0px",
+              threshold: 0.1,
+            },
+          );
           observer.observe(lastRowEl);
         }
       };
@@ -93,10 +133,15 @@ console.log("Отображаем треков:", displayTracks.length);
       if (pagContainer) pagContainer.style.display = "flex";
       const renderDesktopPage = (page: number) => {
         renderBatch(page, false);
-        renderPagination(displayTracks.length, itemsPerPage, page, (newPage) => {
-          renderDesktopPage(newPage);
-          scrollWrapper.scrollTo({ top: 0, behavior: "smooth" });
-        });
+        renderPagination(
+          displayTracks.length,
+          itemsPerPage,
+          page,
+          (newPage) => {
+            renderDesktopPage(newPage);
+            scrollWrapper.scrollTo({ top: 0, behavior: "smooth" });
+          },
+        );
       };
       renderDesktopPage(1);
     }

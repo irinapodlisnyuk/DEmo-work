@@ -2,7 +2,7 @@
 @use "../global/variables" as *;
 
 .footer {
-    border-top: 1px solid $color-whisper;
+  border-top: 1px solid $color-whisper;
   // flex: 0 0 auto;
   // height: 100px;
   // flex-shrink: 0;
@@ -11,7 +11,7 @@
   // bottom: 0;
   // left: 0;
   //  z-index: 1;
-  
+
   background-color: $color-white;
 
   // @include vp-1023 {
@@ -199,12 +199,18 @@
     user-select: none;
     transition: opacity $transition-300;
 
+    // &.active {
+    //   color:$color-burnt-orange;
+    // }
+
     &:hover {
       opacity: 1;
       filter: drop-shadow(1px 2px 2px $color-burnt-orange);
     }
 
-    &#playBtn {
+    // &#playBtn
+
+    &#play-pauseBtn {
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -216,20 +222,19 @@
       //   right: 0;
       // }
     }
-
-    &#pauseBtn {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: $color-dark-gray;
-      left: 50%;
-      display: none;
-    }
-
-    &#sortBtn,
+    &#skip-forwardBtn,
+    &#skip-backBtn,
+    &#shuffleBtn,
     &#prevBtn,
     &#nextBtn,
     &#repeatBtn {
+      color: $color-dark-gray;
+
+      
+    &.active {
+      color:$color-burnt-orange;
+    }
+
       @include vp-767 {
         display: none;
       }
@@ -241,6 +246,16 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    // display: none;
+  }
+
+  &__btn-pause {
+    color: $color-white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
   }
 
   &__controlsProgress {
@@ -251,6 +266,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+    cursor: pointer;
 
     @include vp-767 {
       display: flex;
@@ -267,29 +283,29 @@
   }
 
   /* Progress */
-  &__waveform {
-    width: 100%;
-    height: 20px;
-    position: absolute;
-    left: 35px;
-    margin: -15% auto;
-    display: block;
-    cursor: pointer;
-    opacity: 0.8;
-    -webkit-user-select: none;
-    user-select: none;
+  // &__waveform {
+  //   width: 100%;
+  //   height: 20px;
+  //   position: absolute;
+  //   left: 35px;
+  //   margin: -15% auto;
+  //   display: block;
+  //   cursor: pointer;
+  //   opacity: 0.8;
+  //   -webkit-user-select: none;
+  //   user-select: none;
 
-    @include vp-1023 {
-      display: none;
-    }
+  //   @include vp-1023 {
+  //     display: none;
+  //   }
 
-    @include vp-767 {
-      display: none;
-    }
-  }
-  &__waveform:hover {
-    opacity: 1;
-  }
+  //   @include vp-767 {
+  //     display: none;
+  //   }
+  // }
+  // &__waveform:hover {
+  //   opacity: 1;
+  // }
 
   &__line {
     width: 100%;
@@ -314,10 +330,11 @@
   &__progress {
     position: absolute;
     width: 100%;
-    height: 2px;
-    transform: translateY(50%);
+    height: 3px;
+    // transform: translateY(50%);
     background-color: $color-burnt-orange;
-    z-index: -1;
+    // z-index: -1;
+
 
     @include vp-1023 {
       // width: 100%;

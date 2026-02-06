@@ -13,7 +13,7 @@
       <div class="container">
         <div class="header__wrapper">
           <div class="header__logo">
-            <a href="#" class="header__logo-link">
+            <a href="main.html" class="header__logo-link">
               <svg
                 class="header__logo-img"
                 width="33"
@@ -76,8 +76,8 @@
                   /> -->
                 <img
                   class="header__user-img"
-                  src="./images/foto-user-desktop.png"
-                  srcset="./images/foto-user-desktop@2x.png 2x"
+                  src="./images/avatar.png"
+                  srcset="./images/avatar.png"
                   width="42"
                   height="42"
                   alt="Фотография пользователя"
@@ -420,6 +420,16 @@
             <div class="footer__controlsOuter">
               <div class="footer__controlsInner-loading" id="loading"></div>
               <div class="footer__controlsInner">
+                <div class="footer__btn" id="skip-forwardBtn">
+                  <svg
+                    class="footer__btn-icon"
+                    width="16"
+                    height="16"
+                    aria-hidden="true"
+                  >
+                    <use href="./images/sprite.svg#arrow-forward"></use>
+                  </svg>
+                </div>
                 <div class="footer__btn" id="shuffleBtn">
                   <svg
                     class="footer__btn-icon"
@@ -440,7 +450,7 @@
                     <use href="./images/sprite.svg#skipBack"></use>
                   </svg>
                 </div>
-                <div class="footer__btn" id="playBtn">
+                <div class="footer__btn" id="play-pauseBtn">
                   <svg
                     class="footer__btn-play"
                     width="12"
@@ -449,12 +459,10 @@
                   >
                     <use href="./images/sprite.svg#play"></use>
                   </svg>
-                </div>
-                <div class="footer__btn" id="pauseBtn">
-                  <svg
+                    <svg
                     class="footer__btn-pause"
-                    width="12"
-                    height="15"
+                    width="24"
+                    height="24"
                     aria-hidden="true"
                   >
                     <use href="./images/sprite.svg#pause"></use>
@@ -480,11 +488,21 @@
                     <use href="./images/sprite.svg#repeat"></use>
                   </svg>
                 </div>
+                <div class="footer__btn" id="skip-backBtn">
+                  <svg
+                    class="footer__btn-icon"
+                    width="16"
+                    height="16"
+                    aria-hidden="true"
+                  >
+                    <use href="./images/sprite.svg#arrow-back"></use>
+                  </svg>
+                </div>
               </div>
               <!-- Progress -->
               <div class="footer__controlsProgress">
                 <div class="footer__timer" id="timer">0:00</div>
-                <div class="footer__waveform" id="waveform"></div>
+                <!-- <div class="footer__waveform" id="waveform"></div> -->
                 <div class="footer__line">
                   <div class="footer__bar" id="bar"></div>
                   <div class="footer__progress" id="progress"></div>

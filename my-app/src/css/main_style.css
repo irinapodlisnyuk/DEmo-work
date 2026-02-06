@@ -652,6 +652,19 @@ button {
   transition: color ease-in 0.3s;
 }
 
+.input-error::-moz-placeholder {
+  color: red;
+}
+
+.input-error::placeholder {
+  color: red;
+}
+
+input[type=search]::-webkit-search-cancel-button {
+  display: none;
+  -webkit-appearance: none;
+}
+
 .btn {
   border: none;
   border-radius: 30px;
@@ -972,7 +985,7 @@ button {
   bottom: 0;
   display: flex;
   flex-direction: row-reverse;
-  left: 0;
+  left: 0px;
   opacity: 0;
   pointer-events: none;
   position: fixed;
@@ -980,6 +993,11 @@ button {
   top: 0;
   transition: opacity ease-in 0.3s 0.3s;
   z-index: 10;
+}
+@media (max-width: 767px) {
+  .user-card {
+    left: 0;
+  }
 }
 .user-card--active {
   opacity: 1;
@@ -1053,6 +1071,12 @@ button {
   letter-spacing: 0.01em;
   color: #ffffff;
   cursor: pointer;
+}
+@media (max-width: 767px) {
+  .user-card__exit, .user-card__btnRegEl {
+    padding: 10px 5px;
+    font-size: 12px;
+  }
 }
 .user-card__exit:hover, .user-card__btnRegEl:hover {
   background-color: #fd531a;
@@ -1241,23 +1265,21 @@ button {
   opacity: 1;
   filter: drop-shadow(1px 2px 2px #FC6D3E);
 }
-.footer__btn#playBtn {
+.footer__btn#play-pauseBtn {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background-color: #AAAAAA;
   left: 50%;
 }
-.footer__btn#pauseBtn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #AAAAAA;
-  left: 50%;
-  display: none;
+.footer__btn#skip-forwardBtn, .footer__btn#skip-backBtn, .footer__btn#shuffleBtn, .footer__btn#prevBtn, .footer__btn#nextBtn, .footer__btn#repeatBtn {
+  color: #AAAAAA;
+}
+.footer__btn#skip-forwardBtn.active, .footer__btn#skip-backBtn.active, .footer__btn#shuffleBtn.active, .footer__btn#prevBtn.active, .footer__btn#nextBtn.active, .footer__btn#repeatBtn.active {
+  color: #FC6D3E;
 }
 @media (max-width: 767px) {
-  .footer__btn#sortBtn, .footer__btn#prevBtn, .footer__btn#nextBtn, .footer__btn#repeatBtn {
+  .footer__btn#skip-forwardBtn, .footer__btn#skip-backBtn, .footer__btn#shuffleBtn, .footer__btn#prevBtn, .footer__btn#nextBtn, .footer__btn#repeatBtn {
     display: none;
   }
 }
@@ -1267,11 +1289,20 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.footer__btn-pause {
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
 .footer__controlsProgress {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  cursor: pointer;
 }
 @media (max-width: 767px) {
   .footer__controlsProgress {
@@ -1284,32 +1315,6 @@ button {
   line-height: 100%;
   letter-spacing: 0.02em;
   color: #AAAAAA;
-}
-.footer__waveform {
-  width: 100%;
-  height: 20px;
-  position: absolute;
-  left: 35px;
-  margin: -15% auto;
-  display: block;
-  cursor: pointer;
-  opacity: 0.8;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-       user-select: none;
-}
-@media (max-width: 1023px) {
-  .footer__waveform {
-    display: none;
-  }
-}
-@media (max-width: 767px) {
-  .footer__waveform {
-    display: none;
-  }
-}
-.footer__waveform:hover {
-  opacity: 1;
 }
 .footer__line {
   width: 100%;
@@ -1331,10 +1336,8 @@ button {
 .footer__progress {
   position: absolute;
   width: 100%;
-  height: 2px;
-  transform: translateY(50%);
+  height: 3px;
   background-color: #FC6D3E;
-  z-index: -1;
 }
 @media (max-width: 767px) {
   .footer__progress {

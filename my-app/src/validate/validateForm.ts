@@ -30,8 +30,6 @@ export function validateForm(formSelector: string): void {
           navigate("login");
         } else {
           localStorage.setItem("token", data.token);
-          // В логине поле может называться 'login-username', 
-          // берем его или 'username' для сохранения
           localStorage.setItem("username", String(formData.username || formData['login-username']));
           window.location.href = "main.html";
         }

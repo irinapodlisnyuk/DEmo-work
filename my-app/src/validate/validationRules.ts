@@ -17,6 +17,10 @@ export const regRules = {
 };
 
 export const loginRules = {
-  "#login-username": [{ rule: "required" as Rules, errorMessage: "Введите имя" }],
-  "#login-password": [{ rule: "required" as Rules, errorMessage: "Введите пароль" }],
+  "#login-username": [
+    { rule: "required" as Rules, errorMessage: "Введите имя" },
+  ],
+  "#login-password": [
+    { rule: "required" as Rules, errorMessage: "Введите пароль" },
+  ],
 };

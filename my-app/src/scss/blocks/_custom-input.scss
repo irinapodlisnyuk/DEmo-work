@@ -1,7 +1,6 @@
 @use "../global/mixins" as *;
 @use "../global/variables" as *;
 
-
 .custom-input {
   position: relative;
 
@@ -65,4 +64,12 @@
     color: $color-dark-gray;
     transition: color $transition-300;
   }
+}
+.input-error::placeholder {
+  color: red;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+    display: none;
+    -webkit-appearance: none;
 }

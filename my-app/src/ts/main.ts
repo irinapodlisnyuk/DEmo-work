@@ -7,6 +7,8 @@ import { nameUser} from "./user/nameUserAdd";
 import { exitBtn} from "./user/exitBtn";
 import { filterTracks} from "./tableList/filterTracks";
 import { initProgressBar} from "./player/initProgressBar";
+import {   validateSearch} from "../validate/validateSearch";
+import {   btnControls} from "../ts/player/btnControls";
 
 import '../scss/main_style.scss';
 import '../images/sprite.svg';
@@ -22,4 +24,6 @@ window.addEventListener("DOMContentLoaded", () => {
   exitBtn();
   filterTracks();
   initProgressBar();
+  validateSearch();
+  btnControls() 
 });

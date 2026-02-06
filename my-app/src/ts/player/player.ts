@@ -10,6 +10,25 @@ class PlayerService {
   public isShuffle: boolean = false;
 
   // Метод запуска трека
+  // public playTrack(index: number, currentList: AudioItem[]) {
+  //   this.playlist = currentList;
+  //   this.currentIndex = index;
+  //   const item = this.playlist[index];
+
+  //   if (this.sound) this.sound.unload();
+
+  //   // Собираем URL: http://localhost:8000/ + audio/podcast-1.mp3
+  //   const fileUrl = `http://localhost:8000/${item.encoded_audio}`;
+
+  //   this.sound = new Howl({
+  //     src: [fileUrl],
+  //     html5: true, // Важно для длинных подкастов
+  //     autoplay: true,
+  //     onplay: () => this.updateUI(),
+  //     onend: () => this.next(),
+  //   });
+  // }
+
   public playTrack(index: number, currentList: AudioItem[]) {
     this.playlist = currentList;
     this.currentIndex = index;
@@ -17,15 +36,29 @@ class PlayerService {
 
     if (this.sound) this.sound.unload();
 
-    // Собираем URL: http://localhost:8000/ + audio/podcast-1.mp3
-    const fileUrl = `http://localhost:8000/${item.encoded_audio}`;
+    const isUrl =
+      item.encoded_audio.includes(".mp3") ||
+      item.encoded_audio.includes(".wav");
+    const isBase64 = item.encoded_audio.startsWith("data:audio") || !isUrl;
+
+    let trackSrc = isBase64
+      ? item.encoded_audio.startsWith("data:audio")
+        ? item.encoded_audio
+        : `data:audio/mpeg;base64,${item.encoded_audio}`
+      : `http://localhost:8000/${item.encoded_audio}`;
 
     this.sound = new Howl({
-      src: [fileUrl],
-      html5: true, // Важно для длинных подкастов
+      src: [trackSrc],
+      format: ["mp3"],
+      html5: false, // МЕНЯЕМ НА FALSE: это решит проблему с тем, что пауза не нажимается
       autoplay: true,
+      loop: this.isLoop, // Передаем текущее состояние повтора новому треку
       onplay: () => this.updateUI(),
-      onend: () => this.next(),
+      onend: () => {
+        // Если повтор выключен — идем дальше, если включен — Howler сам переиграет (из-за loop: true)
+        if (!this.isLoop) this.next();
+      },
+      onloaderror: (id, err) => console.error("Ошибка загрузки:", err),
     });
   }
 
@@ -39,6 +72,10 @@ class PlayerService {
 
     // Сохраняем значение, чтобы новые треки запускались с той же громкостью
     Howler.volume(volume);
+  }
+
+  public isPlaying(): boolean {
+    return this.sound ? this.sound.playing() : false;
   }
 
   public togglePlay() {
@@ -102,14 +139,25 @@ class PlayerService {
     const titleEl = document.getElementById("player-title");
     const artistEl = document.getElementById("player-artist");
 
+    // Ищем иконки
+    const playIcon = document.querySelector(".footer__btn-play") as HTMLElement;
+    const pauseIcon = document.querySelector(
+      ".footer__btn-pause",
+    ) as HTMLElement;
+
     if (titleEl) titleEl.innerText = track.title;
 
     if (artistEl) {
-      // Безопасно определяем автора в зависимости от типа медиафайла
       const author = track.type === "track" ? track.artist : track.host;
       artistEl.innerText = author || "Unknown";
     }
+
+    // ТАК КАК МЫ ЗАПУСТИЛИ ТРЕК (onplay):
+    // Скрываем Play, показываем Pause
+    if (playIcon) playIcon.style.display = "none";
+    if (pauseIcon) pauseIcon.style.display = "block";
   }
+
 }
 
 export const player = new PlayerService();
