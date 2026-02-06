@@ -3,20 +3,10 @@
 
 .header {
   padding: 15px 0 0;
-  // width: 100%;
-  // position: fixed;
-  // top: 0;
-  // left: 0;
-  // z-index: 20;
   background-color: $color-white;
 
   @include vp-767 {
     padding: 13px 0;
-    // position: fixed;
-    // width: 100%;
-    // top: 0;
-    // left: 0;
-    // z-index: 20;
     background-color: $color-white;
   }
 
@@ -43,7 +33,6 @@
   }
 
   &__logo {
-    // height: 69px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -117,7 +106,6 @@
     }
   }
   &__user {
-    //max-width: 246px;
     display: flex;
     justify-content: space-between;
     align-items: center;

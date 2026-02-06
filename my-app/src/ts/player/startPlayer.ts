@@ -1,10 +1,10 @@
 import { player } from "./player";
 import { formatTime } from "../../utils/formatTime";
 
-function startPlayerUpdates() {
-  const timeEl = document.getElementById("player-time");
-  const durationEl = document.getElementById("player-duration");
-  const barEl = document.getElementById("player-progress-bar"); // Тот, что синий/зеленый
+export function startPlayer() {
+  const timeEl = document.getElementById("timer");
+  const durationEl = document.getElementById("duration");
+  const progressEl = document.getElementById("progress");
 
   setInterval(() => {
     const progress = player.getProgress();
@@ -18,6 +18,6 @@ function startPlayerUpdates() {
     }
 
     // 3. Ширина полоски прогресса
-    if (barEl) barEl.style.width = `${progress.percent}%`;
-  }, 1000); // 1000мс = 1 сек. Для плавной полоски можно поставить 100мс
+    if (progressEl) progressEl.style.width = `${progress.percent}%`;
+  }, 100); // 100мс  Для плавной полоски 
 }

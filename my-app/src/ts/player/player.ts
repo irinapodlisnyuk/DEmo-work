@@ -1,5 +1,8 @@
 import { Howl } from "howler";
 import { AudioItem } from "../tableList/typesTracks";
+import { startPlayer } from "./startPlayer";
+import { setChildren } from "redom";
+import { createTrack } from "./createTrack";
 
 class PlayerService {
   private sound: Howl | null = null;
@@ -10,25 +13,6 @@ class PlayerService {
   public isShuffle: boolean = false;
 
   // Метод запуска трека
-  // public playTrack(index: number, currentList: AudioItem[]) {
-  //   this.playlist = currentList;
-  //   this.currentIndex = index;
-  //   const item = this.playlist[index];
-
-  //   if (this.sound) this.sound.unload();
-
-  //   // Собираем URL: http://localhost:8000/ + audio/podcast-1.mp3
-  //   const fileUrl = `http://localhost:8000/${item.encoded_audio}`;
-
-  //   this.sound = new Howl({
-  //     src: [fileUrl],
-  //     html5: true, // Важно для длинных подкастов
-  //     autoplay: true,
-  //     onplay: () => this.updateUI(),
-  //     onend: () => this.next(),
-  //   });
-  // }
-
   public playTrack(index: number, currentList: AudioItem[]) {
     this.playlist = currentList;
     this.currentIndex = index;
@@ -53,7 +37,10 @@ class PlayerService {
       html5: false, // МЕНЯЕМ НА FALSE: это решит проблему с тем, что пауза не нажимается
       autoplay: true,
       loop: this.isLoop, // Передаем текущее состояние повтора новому треку
-      onplay: () => this.updateUI(),
+      onplay: () => {
+        this.updateUI();
+        startPlayer();
+      },
       onend: () => {
         // Если повтор выключен — идем дальше, если включен — Howler сам переиграет (из-за loop: true)
         if (!this.isLoop) this.next();
@@ -134,10 +121,27 @@ class PlayerService {
     };
   }
 
+  // Внутри класса PlayerService
+  public getCurrentTrack(): AudioItem | null {
+    return this.playlist[this.currentIndex] || null;
+  }
+
   private updateUI() {
     const track = this.playlist[this.currentIndex];
+    if (!track) return;
+
     const titleEl = document.getElementById("player-title");
     const artistEl = document.getElementById("player-artist");
+    const playerEl = document.querySelector(".footer__player");
+    const wrapperEl = document.querySelector(".footer__wrapper");
+
+    if (playerEl && wrapperEl) {
+      // Создаем НОВЫЙ блок через вашу функцию RE-DOM
+      const newWrapper = createTrack(track, this.currentIndex, this.playlist);
+
+      // Заменяем старый блок на новый прямо в DOM
+      playerEl.replaceChild(newWrapper, wrapperEl);
+    }
 
     // Ищем иконки
     const playIcon = document.querySelector(".footer__btn-play") as HTMLElement;
@@ -152,12 +156,9 @@ class PlayerService {
       artistEl.innerText = author || "Unknown";
     }
 
-    // ТАК КАК МЫ ЗАПУСТИЛИ ТРЕК (onplay):
-    // Скрываем Play, показываем Pause
     if (playIcon) playIcon.style.display = "none";
     if (pauseIcon) pauseIcon.style.display = "block";
   }
-
 }
 
 export const player = new PlayerService();

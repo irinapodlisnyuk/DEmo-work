@@ -3,12 +3,8 @@
 
 .catalog {
   display: flex;
- // flex: 1 0 auto; 
-   flex-grow: 1;
-    min-height: calc(100vh - 169px); /* 120px = сумма высот шапки и футера */
-  // height: 100vh;    
-  // overflow-y: auto;   
-
+  flex-grow: 1;
+  min-height: calc(100vh - 169px); /* 120px = сумма высот шапки и футера */
 
   @include vp-767 {
     background-color: $color-whisper;
@@ -43,7 +39,7 @@
   }
 
   &__wrapper-center {
-   overflow-y: auto;
+    overflow-y: auto;
     padding: 35px 0 0;
     margin: 0 0 23px;
 

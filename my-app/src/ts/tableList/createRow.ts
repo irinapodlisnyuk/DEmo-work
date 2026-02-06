@@ -20,7 +20,7 @@ export function createRow(
 
   const pointsIcon = svg(
     "svg",
-    { class: "more-btn__icon", width: "24", height: "24" },
+    { class: "tooltip__btn-icon", width: "24", height: "24" },
     svg("use", { href: `${spritePath}#points-desktop` }),
   );
 
@@ -89,7 +89,7 @@ export function createRow(
       el("td.track-row__date", dateAdded),
       el("td.track-row__heart", favBtn),
       el("td.track-row__actions", formatTime(item.duration)),
-      el("td.track-row__more", [el("button.more-btn", [pointsIcon])]),
+      el("td.track-row__more", [el("button.tooltip__btn", [pointsIcon])]),
     ],
   );
   return row;

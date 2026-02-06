@@ -1,0 +1,35 @@
+@use "../global/mixins" as *;
+@use "../global/variables" as *;
+
+.tooltip__btn {
+    width: 24px;
+    height: 24px;
+    border: transparent;
+    background-color: transparent;
+    position: relative;
+    padding: 0;
+    color: $color-silver;
+    cursor: pointer;
+    -webkit-filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.33));
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.33));
+    user-select: none;
+    transition: opacity $transition-300;
+
+    &:hover {
+     opacity: 1;
+      filter: drop-shadow(1px 2px 2px $color-burnt-orange);
+    }
+
+    &:active .tooltip__btn-icon{
+      color: $color-burnt-orange;
+    }
+
+    &-icon {
+      stroke: none;
+
+      @include vp-767 {
+        width: 17px;
+        height: 17px;
+      }
+    }
+  }

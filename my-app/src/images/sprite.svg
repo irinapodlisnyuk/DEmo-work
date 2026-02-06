@@ -35,14 +35,14 @@
     <path d="M21.3889 11.36L7.8911 3.11111C7.77741 3.04163 7.64726 3.00369 7.51404 3.0012C7.38083 2.9987 7.24935 3.03174 7.13314 3.09692C7.01692 3.16209 6.92017 3.25705 6.85283 3.37202C6.7855 3.48699 6.75 3.61783 6.75 3.75107V20.2489C6.75 20.3822 6.7855 20.513 6.85283 20.628C6.92017 20.743 7.01692 20.8379 7.13314 20.9031C7.24935 20.9683 7.38083 21.0013 7.51404 20.9988C7.64726 20.9963 7.77741 20.9584 7.8911 20.8889L21.3889 12.64C21.4985 12.573 21.5891 12.4789 21.652 12.3669C21.7148 12.2548 21.7478 12.1285 21.7478 12C21.7478 11.8715 21.7148 11.7452 21.652 11.6331C21.5891 11.5211 21.4985 11.427 21.3889 11.36Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
         <symbol id="points-desktop" viewBox="0 0 23 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="2" cy="2" r="2" fill="#C4C4C4"/>
-    <circle cx="11.5" cy="2" r="2" fill="#C4C4C4"/>
-    <circle cx="21" cy="2" r="2" fill="#C4C4C4"/>
+    <circle cx="2" cy="2" r="2" fill="currentColor"/>
+    <circle cx="11.5" cy="2" r="2" fill="currentColor"/>
+    <circle cx="21" cy="2" r="2" fill="currentColor"/>
     </symbol>
         <symbol id="points-mobile" viewBox="0 0 17 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="2" cy="2" r="2" fill="#C4C4C4"/>
-    <circle cx="8.5" cy="2" r="2" fill="#C4C4C4"/>
-    <circle cx="15" cy="2" r="2" fill="#C4C4C4"/>
+    <circle cx="2" cy="2" r="2" fill="currentColor"/>
+    <circle cx="8.5" cy="2" r="2" fill="currentColor"/>
+    <circle cx="15" cy="2" r="2" fill="currentColor"/>
     </symbol>
         <symbol id="time" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14Z" stroke="#A4A4A4" stroke-miterlimit="10"/>

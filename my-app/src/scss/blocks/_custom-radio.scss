@@ -1,14 +1,13 @@
 @use "../global/mixins" as *;
 @use "../global/variables" as *;
 
-
 .custom-radio {
   .custom-radio__field:checked + .custom-radio__label {
     background: $color-white;
 
-     @include vp-1023 {
-       background: $color-white;
-     }
+    @include vp-1023 {
+      background: $color-white;
+    }
 
     @include vp-767 {
       background-color: $color-burnt-orange;
@@ -33,7 +32,7 @@
     padding: 9px 9px 9px 30px;
     cursor: pointer;
 
-        @include vp-1023 {
+    @include vp-1023 {
       display: flex;
       gap: 8px;
       border-radius: 30px;
@@ -69,13 +68,13 @@
     transition: color $transition-300;
     position: relative;
     user-select: none;
-     letter-spacing: 0.02em;
+    letter-spacing: 0.02em;
 
-     @include vp-1023 {
-        &:hover {
+    @include vp-1023 {
+      &:hover {
         color: $color-tangaroa;
       }
-     }
+    }
 
     @include vp-767 {
       font-weight: 400;

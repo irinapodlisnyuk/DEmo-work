@@ -3,7 +3,6 @@
 
 .catalog__table {
   width: 100%;
- // margin: 0 0 20px;
 
   &-list {
     cursor: pointer;
@@ -19,7 +18,7 @@
     }
 
     @include vp-1023 {
-        display: none;
+      display: none;
     }
 
     @include vp-767 {

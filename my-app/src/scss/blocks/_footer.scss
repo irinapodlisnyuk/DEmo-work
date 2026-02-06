@@ -76,9 +76,15 @@
     height: 100%;
     padding: 6px 7px;
     gap: 10px;
+    flex-shrink: 0;
 
     @include vp-767 {
       padding: 0;
+    }
+
+    &-img {
+      width: 60px;
+      height: 60px;
     }
   }
 
@@ -102,9 +108,42 @@
     line-height: 12px;
     letter-spacing: 0.01em;
     color: $color-nero;
+
+    @include vp-767 {
+      width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   &__top-icon {
+    fill: $color-burnt-orange;
+    color: transparent;
+  }
+
+  &__heart-btn {
+    width: 24px;
+    height: 24px;
+    border: transparent;
+    background-color: transparent;
+    position: relative;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  &__heart-icon {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    stroke: #fc6d3e;
+    stroke-width: 1px;
+  }
+
+  &__heart-btn.active .footer__heart-icon {
+    // fill: $color-burnt-orange;
     color: $color-burnt-orange;
   }
 
@@ -122,9 +161,7 @@
       text-overflow: ellipsis;
     }
   }
-
   /* Controls */
-
   &__controls {
     position: relative;
     padding: 20px 0;
@@ -140,7 +177,6 @@
 
     @include vp-767 {
       display: flex;
-      // display: contents;
     }
   }
 
@@ -199,16 +235,10 @@
     user-select: none;
     transition: opacity $transition-300;
 
-    // &.active {
-    //   color:$color-burnt-orange;
-    // }
-
     &:hover {
       opacity: 1;
       filter: drop-shadow(1px 2px 2px $color-burnt-orange);
     }
-
-    // &#playBtn
 
     &#play-pauseBtn {
       width: 40px;
@@ -216,11 +246,6 @@
       border-radius: 50%;
       background-color: $color-dark-gray;
       left: 50%;
-      // @include vp-767 {
-      //   position: absolute;
-      //   top: 0;
-      //   right: 0;
-      // }
     }
     &#skip-forwardBtn,
     &#skip-backBtn,
@@ -230,10 +255,9 @@
     &#repeatBtn {
       color: $color-dark-gray;
 
-      
-    &.active {
-      color:$color-burnt-orange;
-    }
+      &.active {
+        color: $color-burnt-orange;
+      }
 
       @include vp-767 {
         display: none;
@@ -246,7 +270,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    // display: none;
   }
 
   &__btn-pause {
@@ -259,10 +282,7 @@
   }
 
   &__controlsProgress {
-    // position: relative;
     display: flex;
-    // display: grid;
-    // grid-template-columns: 24px 1fr 24px;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
@@ -270,7 +290,6 @@
 
     @include vp-767 {
       display: flex;
-      //   position: relative;
     }
   }
   &__timer,
@@ -331,17 +350,14 @@
     position: absolute;
     width: 100%;
     height: 3px;
-    // transform: translateY(50%);
     background-color: $color-burnt-orange;
-    // z-index: -1;
-
 
     @include vp-1023 {
       // width: 100%;
     }
-    @include vp-767 {
-      min-width: 264px;
-    }
+    // @include vp-767 {
+    //   min-width: 264px;
+    // }
   }
 
   &__volume {
