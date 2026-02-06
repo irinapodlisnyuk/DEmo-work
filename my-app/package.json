@@ -21,7 +21,8 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "test": "jest"
   },
   "dependencies": {
     "@types/howler": "^2.2.12",
@@ -39,18 +40,23 @@
     "tippy.js": "^6.3.7"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "concurrently": "^9.2.1",
     "css-loader": "^7.1.2",
     "filemanager-webpack-plugin": "^9.0.1",
     "html-loader": "^5.1.0",
     "html-webpack-inline-svg-plugin": "^2.1.1",
     "html-webpack-plugin": "^5.6.6",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "jsdom": "^28.0.0",
     "mini-css-extract-plugin": "^2.10.0",
     "parcel": "^1.12.4",
     "sass": "^1.97.2",
     "sass-loader": "^16.0.6",
     "style-loader": "^4.0.0",
     "svg-spritemap-webpack-plugin": "^5.1.0",
+    "ts-jest": "^29.4.6",
     "ts-loader": "^9.5.4",
     "typescript": "^5.9.3",
     "webpack": "^5.104.1",
