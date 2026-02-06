@@ -4,7 +4,7 @@
 .tracks-scroll {
   width: 100%;
   overflow-x: hidden;
-  margin: 0 0 20px;
+  margin: 0 0 10px;
 
   @media (min-width: 1024px) {
     // Высчитываем высоту: 100% экрана МИНУС (хедер + заголовок + пагинация + плеер)
