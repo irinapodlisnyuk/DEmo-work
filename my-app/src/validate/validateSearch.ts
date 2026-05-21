@@ -1,5 +1,5 @@
-import JustValidate from "just-validate";
-import { Rules } from "just-validate";
+
+import JustValidate from 'just-validate';
 import { loadTracks } from "../ts/tableList/loadTracks";
 
 export function validateSearch() {
@@ -12,14 +12,14 @@ export function validateSearch() {
     errorLabelStyle: { display: "none" }, // Чтобы ничего не вылезало в верстке
   });
 
-  // 1. Добавляем правила
+  // 1. Добавляем правила (💡 Удалили "as Rules")
   validate.addField("#search-input", [
-    { rule: "required" as Rules, errorMessage: "Введите запрос поиска" },
-    { rule: "minLength" as Rules, value: 3, errorMessage: "Слишком коротко" },
+    { rule: "required", errorMessage: "Введите запрос поиска" },
+    { rule: "minLength", value: 3, errorMessage: "Слишком коротко" },
   ]);
 
   // 2. Если валидация не прошла
-  validate.onFail((fields) => {
+  validate.onFail((fields: any) => {
     const field = fields["#search-input"];
     if (field) {
       const errorText = field.errorMessage || "Ошибка";

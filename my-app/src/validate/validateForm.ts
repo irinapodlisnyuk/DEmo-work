@@ -16,7 +16,7 @@ export function validateForm(formSelector: string): void {
     validate.addField(id, rulesList);
   });
 
-  validate.onSuccess(async (event) => {
+  validate.onSuccess(async (event: SubmitEvent) => {
     event?.preventDefault();
     const formData = Object.fromEntries(new FormData(form).entries());
     const apiUrl = isReg ? "/api/register" : "/api/login";
