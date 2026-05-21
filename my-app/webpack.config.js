@@ -1,12 +1,7 @@
-// module.exports - это аналог export'ов для NodeJS.
-// Эта конструкция похожа на export default.
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-//const FileManagerPlugin = require("filemanager-webpack-plugin");
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-//const HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin');
-//const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin').default || require('svg-spritemap-webpack-plugin');
 
 module.exports = {
   mode: "production",
@@ -18,7 +13,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].bundle.js",
-    publicPath: "/",
+    publicPath: "./",
     clean: true,
   },
 
@@ -30,7 +25,7 @@ module.exports = {
         options: {
           sources: {
             list: [
-              "...", // Оставляет обработку <img>, которые у вас уже работают
+              "...", 
               {
                 tag: "use",
                 attribute: "href",
@@ -59,10 +54,6 @@ module.exports = {
           filename: "assets/images/[name].[hash][ext]", // Картинки будут в dist/assets/images/
         },
       },
-      // {
-      //   test: /\.scss$/i,
-      //   use: ["style-loader", "css-loader", "sass-loader"],
-      // },
       {
         test: /\.tsx?$/,
         use: "ts-loader",
@@ -75,21 +66,6 @@ module.exports = {
   },
 
   plugins: [
-    //    new SVGSpritemapPlugin('src/images/sprite*.svg', { // Путь к вашим иконкам
-    //   output: {
-    //     filename: 'assets/sprite.svg', // Путь и имя файла в папке dist
-    //     svgo: true, // Оптимизация SVG (удаление лишнего кода)
-    //   },
-    //   sprite: {
-    //     prefix: 'icon-', // Добавит префикс к id иконок (будет icon-name)
-    //     generate: {
-    //       title: false, // Отключает лишние теги внутри спрайта
-    //     },
-    //   },
-    // }),
-    //    new HtmlWebpackInlineSVGPlugin({
-    //   runPreEmit: true, // Позволяет плагину работать до записи файлов на диск
-    // }),
 
     new MiniCssExtractPlugin({
       filename: "css/[name].[contenthash].css", // Создаст отдельные main.css и second.css
@@ -112,14 +88,4 @@ module.exports = {
     historyApiFallback: true, // Позволяет корректно работать переходам
     hot: true,
   },
-
-  // devServer: {
-  //   static: {
-  //     directory: "./src",
-  //   },
-  //   hot: true,
-  //   proxy: {
-  //     "/api": "http://localhost:8000",
-  //   },
-  // },
 };
