@@ -82,11 +82,7 @@ export function createRow(
         el("div.track-wrapper", [
           el("img.track-img", {
             src: trackImg,
-<<<<<<< HEAD
-            width: "60", 
-=======
-            width: "60",  // Добавляем размеры, как в рабочем футере
->>>>>>> 92069d8c363a047fce40184ed5495f685027e754
+            width: "60",  
             height: "60",
             alt: "Постер музыкального трека",
             onerror: (e: Event) => {
