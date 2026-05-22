@@ -29,7 +29,7 @@ class PlayerService {
       ? item.encoded_audio.startsWith("data:audio")
         ? item.encoded_audio
         : `data:audio/mpeg;base64,${item.encoded_audio}`
-      : `http://localhost:8000/${item.encoded_audio}`;
+      : `https://vibecast-studio-2uiq.onrender.com/${item.encoded_audio}`;
 
     this.sound = new Howl({
       src: [trackSrc],

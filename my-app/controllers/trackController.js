@@ -35,15 +35,6 @@ const removeFromFavorites = (req, res) => {
   res.json({ message: "композиция убрана из избранного" });
 };
 
-// const getFavorites = (req, res) => {
-//   const username = req.user.username;
-//   const favoriteTracks = User.getFavorites(username);
-
-//   const favoriteTrackDetails = tracks.filter((track) =>
-//     favoriteTracks.includes(track.id)
-//   );
-//   res.json(favoriteTrackDetails);
-// };
 const getFavorites = (req, res) => {
   const username = req.user.username;
   const favoriteIds = User.getFavorites(username); // Получаем массив вида ["track_1", "podcast_5"]
