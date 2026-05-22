@@ -81,11 +81,13 @@ export function createRow(
       el("td.track-row__info", [
         el("div.track-wrapper", [
           el("img.track-img", {
+            src: trackImg,
             alt: "Постер музыкального трека",
+          
             onerror: (e: Event) => {
               const img = e.target as HTMLImageElement;
-              img.onerror = null; 
-              img.src = "./images/img-audio/track-icon.png"; 
+              img.onerror = null;
+              img.src = "./images/img-audio/track-icon.png";
             },
           }),
           el("div.track-text", [
