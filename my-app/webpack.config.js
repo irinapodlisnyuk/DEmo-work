@@ -13,7 +13,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].bundle.js",
-    publicPath: "",
+    publicPath: "/VibeCast-Studio/",
     clean: true,
   },
 
@@ -36,11 +36,11 @@ module.exports = {
         },
       },
       {
-        test: /\.(c|sc|sa)ss$/i, // Обрабатывает .sass и .scss
+        test: /\.(c|sc|sa)ss$/i, 
         use: [
-          MiniCssExtractPlugin.loader, // 3. Извлекает CSS в отдельные файлы
-          "css-loader", // 2. Превращает CSS в CommonJS
-          "sass-loader", // 1. Компилирует SCSS в CSS
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader", 
         ],
       },
       {
@@ -51,7 +51,7 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource",
         generator: {
-          filename: "assets/images/[name][ext]", // Картинки будут в dist/assets/images/
+          filename: "assets/images/[name][ext]", 
         },
       },
       {
