@@ -41,8 +41,8 @@ export function createTrack(
 
   const trackImg =
     item.type === "track"
-      ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
-      : "./images/img-audio/placeholder.png";
+      ? `../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : "../../images/img-audio/placeholder.png";
 
   // 2. Логика автора и обложки
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
@@ -60,7 +60,7 @@ export function createTrack(
         src: trackImg,
         onerror: (e: Event) =>
           ((e.target as HTMLImageElement).src =
-            "./images/img-audio/track-icon.png"),
+            "../../images/img-audio/track-icon.png"),
       }),
       // Инфо-блок
       el("div.footer__info", [
