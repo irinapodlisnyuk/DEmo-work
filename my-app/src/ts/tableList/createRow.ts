@@ -53,8 +53,8 @@ export function createRow(
 
   const trackImg =
     item.type === "track"
-      ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
-      : "./images/img-audio/placeholder.png";
+      ? `../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : "../../images/img-audio/placeholder.png";
 
   const moreBtn = el(
     "button.tippy__btn",
@@ -84,8 +84,8 @@ export function createRow(
             src: trackImg,
             onerror: (e: Event) => {
               const img = e.target as HTMLImageElement;
-              img.onerror = null; // Полноценно останавливает бесконечный цикл 404
-              img.src = "./images/img-audio/track-icon.png";
+              img.onerror = null; 
+              img.src = "../../images/img-audio/track-icon.png";
             },
           }),
           el("div.track-text", [
