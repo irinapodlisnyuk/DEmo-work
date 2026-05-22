@@ -17,12 +17,21 @@ const User = {
   },
 
   addFavorite: (username, trackId) => {
-    if (favorites[username] && !favorites[username].includes(trackId)) {
+    // Если у пользователя почему-то еще нет массива избранного, создаем его
+    if (!favorites[username]) {
+      favorites[username] = [];
+    }
+    if (!favorites[username].includes(trackId)) {
       favorites[username].push(trackId);
     }
   },
 
   removeFavorite: (username, trackId) => {
+    if (!favorites[username]) {
+      favorites[username] = [];
+      return; 
+    }
+
     const index = favorites[username].indexOf(trackId);
     if (index > -1) {
       favorites[username].splice(index, 1);
@@ -30,7 +39,10 @@ const User = {
   },
 
   getFavorites: (username) => {
-    return favorites[username] || [];
+    if (!favorites[username]) {
+      favorites[username] = [];
+    }
+    return favorites[username];
   },
 };
 
