@@ -8,6 +8,8 @@ import { player } from "../player/player";
 import { getRelativeTime } from "../../utils/formatDate";
 import { setupTooltip, tooltipContent } from "../tippy";
 
+import defaultIconPath from "../../images/img-audio/placeholder.png";
+
 export function createRow(
   item: AudioItem,
   index: number,
@@ -88,9 +90,11 @@ export function createRow(
         el("div.track-wrapper", [
           el("img.track-img", {
             src: trackImg,
-            onerror: (e: Event) =>
-              ((e.target as HTMLImageElement).src =
-                "../../images/img-audio/track-icon.png"),
+              onerror: (e: Event) => {
+              const img = e.target as HTMLImageElement;
+              img.onerror = null; 
+              img.src = defaultIconPath; 
+            },
           }),
           el("div.track-text", [
             el("div.track-title", item.title),
@@ -106,5 +110,9 @@ export function createRow(
       el("td.track-row__more", moreBtn),
     ],
   );
+    row.onunmount = () => {
+    window.removeEventListener("favoriteUpdate", handleFavoriteUpdate);
+  };
+  
   return row;
 }
