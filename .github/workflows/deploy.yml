@@ -39,7 +39,11 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
+<<<<<<< HEAD
           path: ./my-app/dist # ДОБАВИЛИ ТОЧКУ В НАЧАЛО ПУТИ (относительный путь)
+=======
+          path: ./my-app/dist
+>>>>>>> 92069d8c363a047fce40184ed5495f685027e754
 
       - name: Deploy to GitHub Pages
         id: deployment
