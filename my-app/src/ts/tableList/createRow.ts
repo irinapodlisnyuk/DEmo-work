@@ -87,13 +87,11 @@ export function createRow(
       el("td.track-row__num", index + 1),
       el("td.track-row__info", [
         el("div.track-wrapper", [
-          el("img.track-img", {
+           el("img.track-img", {
             src: trackImg,
-              onerror: (e: Event) => {
-              const img = e.target as HTMLImageElement;
-              img.onerror = null; 
-              img.src = "../../../images/img-audio/track-icon.png");
-            },
+            onerror: (e: Event) =>
+              ((e.target as HTMLImageElement).src =
+                "./images/img-audio/track-icon.png"),
           }),
           el("div.track-text", [
             el("div.track-title", item.title),
