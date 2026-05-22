@@ -84,7 +84,7 @@ export function createRow(
             src: trackImg,
             width: "60",  
             height: "60",
-            alt: "Постер музыкального трека",
+            alt: "Постер трека",
             onerror: (e: Event) => {
               const img = e.target as HTMLImageElement;
               img.onerror = null; 
