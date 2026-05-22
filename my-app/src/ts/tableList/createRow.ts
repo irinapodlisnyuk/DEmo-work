@@ -8,6 +8,9 @@ import { player } from "../player/player";
 import { getRelativeTime } from "../../utils/formatDate";
 import { setupTooltip, tooltipContent } from "../tippy";
 
+import defaultIconPath from "../../../images/img-audio/track-icon.png";
+import placeholderPath from "../../../images/img-audio/placeholder.png";
+
 export function createRow(
   item: AudioItem,
   index: number,
@@ -53,8 +56,8 @@ export function createRow(
 
   const trackImg =
     item.type === "track"
-      ? `../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
-      : "../../images/img-audio/placeholder.png";
+      ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : placeholderPath;
 
   const moreBtn = el(
     "button.tippy__btn",
@@ -82,10 +85,13 @@ export function createRow(
         el("div.track-wrapper", [
           el("img.track-img", {
             src: trackImg,
+            width: "60",  // Добавляем размеры, как в рабочем футере
+            height: "60",
+            alt: "Постер музыкального трека",
             onerror: (e: Event) => {
               const img = e.target as HTMLImageElement;
               img.onerror = null; 
-              img.src = "../../images/img-audio/track-icon.png";
+              img.src = defaultIconPath; 
             },
           }),
           el("div.track-text", [
