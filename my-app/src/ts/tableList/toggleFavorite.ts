@@ -14,7 +14,7 @@ export async function toggleFavorite(
   const method = isFavorite ? "DELETE" : "POST";
 
   try {
-    const response = await fetch("http://localhost:8000/api/favorites", {
+    const response = await fetch("https://vibecast-studio-2uiq.onrender.com/api/favorites", {
       method: method,
       headers: {
         "Content-Type": "application/json",

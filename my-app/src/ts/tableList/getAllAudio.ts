@@ -10,9 +10,9 @@ export async function getAllAudio(): Promise<AudioItem[]> {
 
   try {
     const [tracksRes, podcastsRes, favsRes] = await Promise.all([
-      fetch("http://localhost:8000/api/tracks", { headers }),
-      fetch("http://localhost:8000/api/podcasts", { headers }),
-      fetch("http://localhost:8000/api/favorites", { headers }),
+      fetch("https://vibecast-studio-2uiq.onrender.com/api/tracks", { headers }),
+      fetch("https://vibecast-studio-2uiq.onrender.com/api/podcasts", { headers }),
+      fetch("https://vibecast-studio-2uiq.onrender.com/api/favorites", { headers }),
     ]);
 
     if ([tracksRes, podcastsRes, favsRes].some((r) => r.status === 401)) {
