@@ -56,6 +56,7 @@ export function createRow(
     : "Неизвестно";
 
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
+
   const trackImg =
     item.type === "track"
       ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
