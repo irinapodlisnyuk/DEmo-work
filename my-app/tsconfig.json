@@ -1,22 +1,19 @@
 {
   "compilerOptions": {
+    "types": ["node", "jest"],
     "outDir": "./dist/",
     "noImplicitAny": true,
     "sourceMap": true,
-    // "module": "es6",
-    // "target": "es5",
     "jsx": "react",
     "allowJs": true,
-   // "moduleResolution": "node",
-    "strict": true,        
-    "checkJs": false,         
+    "strict": true,
+    "checkJs": false,
     "esModuleInterop": true,
-     "target": "ES2020",         
-    "module": "ESNext",       
+    "target": "ES2020",
+    "module": "ESNext",
     "moduleResolution": "bundler",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    
+    "lib": ["ES2020", "DOM", "DOM.Iterable"]
   },
   "files": ["global.d.ts"],
-   "include": ["./src/**/*"]
+  "include": ["./src/**/*"]
 }
