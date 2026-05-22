@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "start": "node server.js",
-    "build": "webpack",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 webpack",
     "watch": "webpack --watch",
     "dev": "node server.js",
     "test": "jest"
@@ -44,6 +44,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^25.9.1",
     "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
     "css-loader": "^7.1.2",
     "filemanager-webpack-plugin": "^9.0.1",
     "html-loader": "^5.1.0",
