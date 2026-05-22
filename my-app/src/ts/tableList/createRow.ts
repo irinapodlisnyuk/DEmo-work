@@ -58,8 +58,8 @@ export function createRow(
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
   const trackImg =
     item.type === "track"
-      ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
-      : "./images/img-audio/placeholder.png";
+      ? `../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : "../../images/img-audio/placeholder.png";
 
   const moreBtn = el(
     "button.tippy__btn",
