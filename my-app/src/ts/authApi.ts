@@ -8,10 +8,8 @@
 // }
 
 export async function sendAuthRequest(url: string, data: object) {
-  // Указываем TypeScript игнорировать проверку process через (process as any)
-  const BASE_URL = (typeof process !== 'undefined' && (process as any).env.NODE_ENV === "production")
-    ? "https://vibecast-studio-2uiq.onrender.com" 
-    : "http://localhost:8000";
+  // Жёстко прописываем адрес вашего живого сервера на Render
+  const BASE_URL = "https://vibecast-studio-2uiq.onrender.com";
 
   const response = await fetch(`${BASE_URL}${url}`, {
     method: "POST",
