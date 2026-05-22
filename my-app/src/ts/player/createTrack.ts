@@ -4,6 +4,7 @@ import { AudioItem } from "../tableList/typesTracks";
 import { getFavorites } from "../tableList/favoritesTrack";
 import { toggleFavorite } from "../tableList/toggleFavorite";
 
+// Импортируем ассеты (3 уровня вверх: player -> ts -> ts/.. -> src/)
 import spritePath from "../../../images/sprite.svg";
 import defaultIconPath from "../../../images/img-audio/track-icon.png";
 import placeholderPath from "../../../images/img-audio/placeholder.png";
@@ -41,18 +42,14 @@ export function createTrack(
 
   window.addEventListener("favoriteUpdate", handleFavoriteUpdate);
 
-  // Безопасное получение имени репозитория для TypeScript
-  const isGithub = window.location.hostname.includes("github.io");
-  const pathParts = window.location.pathname.split('/');
-  const repoName = isGithub && pathParts.length > 1 ? `/${pathParts[1]}` : "";
+  const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
 
-  // Формируем путь к обложке артиста
+  // Используем простой относительный путь для картинок артистов. 
+  // Если сборщик не сможет его обработать на проде, сработает onerror и подставит железный defaultIconPath
   const trackImg =
     item.type === "track"
-      ? `${repoName}/images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
       : placeholderPath;
-
-  const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
 
   const infoTrack = el(
     "div.footer__wrapper",
@@ -64,8 +61,8 @@ export function createTrack(
         src: trackImg,
         onerror: (e: Event) => {
           const img = e.target as HTMLImageElement;
-          img.onerror = null; // Стоп бесконечного цикла 404
-          img.src = defaultIconPath;
+          img.onerror = null; // Полноценный стоп бесконечного цикла 404
+          img.src = defaultIconPath; // Этот путь собран Webpack/Vite, он 100% сработает
         },
       }),
       el("div.footer__info", [
