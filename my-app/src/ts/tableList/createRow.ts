@@ -1,15 +1,12 @@
 import { el, svg } from "redom";
 import { AudioItem } from "./typesTracks";
 import { formatTime } from "../../utils/formatTime";
+import spritePath from "../../images/sprite.svg";
 import { getFavorites } from "./favoritesTrack";
 import { toggleFavorite } from "./toggleFavorite";
 import { player } from "../player/player";
 import { getRelativeTime } from "../../utils/formatDate";
 import { setupTooltip, tooltipContent } from "../tippy";
-
-import spritePath from "../../../images/sprite.svg";
-import defaultIconPath from "../../../images/img-audio/track-icon.png";
-import placeholderPath from "../../../images/img-audio/placeholder.png";
 
 export function createRow(
   item: AudioItem,
@@ -29,18 +26,23 @@ export function createRow(
   );
 
   const favorites = getFavorites();
-  const itemKey = `${item.type}-${item.id}`;
+
+  const itemKey: string = `${item.type}-${item.id}`;
   const isFavorite = favorites.includes(itemKey);
 
   const favBtn = el(
     "button",
     {
+      // Формируем строку классов заранее: либо "fav-btn active", либо просто "fav-btn"
       className: isFavorite ? "fav-btn active" : "fav-btn",
       onclick: async (e: Event) => {
         e.stopPropagation();
+
         const wasFavorite = favBtn.classList.contains("active");
+        // Отправляем запрос на сервер
         const success = await toggleFavorite(item.id, item.type, wasFavorite);
         if (success) {
+          // classList.toggle работает с ОДНИМ словом, поэтому тут ошибки не будет
           favBtn.classList.toggle("active");
         }
       },
@@ -48,32 +50,38 @@ export function createRow(
     [heartIcon],
   );
 
-  const handleFavoriteUpdate = (e: any) => {
-    const { id, type, isFavorite: newStatus } = e.detail;
-    if (id === item.id && type === item.type) {
-      favBtn.classList.toggle("active", newStatus);
-    }
-  };
+  // Получаем дату из объекта (или ставим текущую, если её нет в API)
+  const dateAdded = item.createdAt
+    ? getRelativeTime(item.createdAt)
+    : "Неизвестно";
 
-  window.addEventListener("favoriteUpdate", handleFavoriteUpdate);
-
-  const dateAdded = item.createdAt ? getRelativeTime(item.createdAt) : "Неизвестно";
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
-  
+
   const trackImg =
     item.type === "track"
-      ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
-      : placeholderPath;
+      ? `../../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : "../../../images/img-audio/placeholder.png";
 
-  const moreBtn = el("button.tippy__btn", { onclick: (e: Event) => e.stopPropagation() }, [pointsIcon]);
-  const tooltipCont = tooltipContent(item.title, author);
+  const moreBtn = el(
+    "button.tippy__btn",
+    {
+      onclick: (e: Event) => e.stopPropagation(), // Чтобы не запускался плеер
+    },
+    [pointsIcon],
+  );
+    // Генерируем контент
+  const tooltipCont = tooltipContent (item.title, author);
+
+  //  Инициализируем тултип через наш модуль
   setupTooltip(moreBtn, tooltipCont);
 
   const row = el(
     "tr.track-row",
     {
       "data-id": item.id,
-      onclick: () => player.playTrack(index, currentList),
+      onclick: () => {
+        player.playTrack(index, currentList);
+      },
     },
     [
       el("td.track-row__num", index + 1),
@@ -81,11 +89,9 @@ export function createRow(
         el("div.track-wrapper", [
           el("img.track-img", {
             src: trackImg,
-            onerror: (e: Event) => {
-              const img = e.target as HTMLImageElement;
-              img.onerror = null; // Полноценный стоп бесконечного цикла 404
-              img.src = defaultIconPath; // Этот путь собран Webpack/Vite, он 100% сработает
-            },
+            onerror: (e: Event) =>
+              ((e.target as HTMLImageElement).src =
+                "./images/img-audio/track-icon.png"),
           }),
           el("div.track-text", [
             el("div.track-title", item.title),
@@ -96,14 +102,10 @@ export function createRow(
       el("td.track-row__album", item.type === "track" ? item.artist : "-"),
       el("td.track-row__date", dateAdded),
       el("td.track-row__heart", favBtn),
+
       el("td.track-row__actions", formatTime(item.duration)),
       el("td.track-row__more", moreBtn),
     ],
   );
-
-  row.onunmount = () => {
-    window.removeEventListener("favoriteUpdate", handleFavoriteUpdate);
-  };
-
   return row;
 }
