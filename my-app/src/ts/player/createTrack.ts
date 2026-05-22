@@ -1,9 +1,9 @@
 import { el, svg } from "redom";
-import { player } from "./player"; // Путь к вашему плееру
+import { player } from "./player";
 import { AudioItem } from "../tableList/typesTracks";
-import spritePath from "../../images/sprite.svg";
 import { getFavorites } from "../tableList/favoritesTrack";
 import { toggleFavorite } from "../tableList/toggleFavorite";
+
 import spritePath from "../../../images/sprite.svg";
 import defaultIconPath from "../../../images/img-audio/track-icon.png";
 import placeholderPath from "../../../images/img-audio/placeholder.png";
@@ -13,7 +13,6 @@ export function createTrack(
   index: number,
   currentList: AudioItem[],
 ) {
-  // 1. Иконка сердца
   const heartIcon = svg(
     "svg",
     { class: "footer__heart-icon", width: "24", height: "24" },
@@ -21,7 +20,7 @@ export function createTrack(
   );
 
   const favorites = getFavorites();
-  const itemKey: string = `${item.type}-${item.id}`;
+  const itemKey = `${item.type}-${item.id}`;
   const isFavorite = favorites.includes(itemKey);
 
   const favBtn = el("button.footer__heart-btn", {
@@ -33,41 +32,42 @@ export function createTrack(
     }
   }, [heartIcon]);
 
-    // СЛУШАЕМ ОБНОВЛЕНИЯ ИЗ ТАБЛИЦЫ
-  window.addEventListener("favoriteUpdate", (e: any) => {
+  const handleFavoriteUpdate = (e: any) => {
     const { id, type, isFavorite: newStatus } = e.detail;
-    // Если ID и Тип совпадают с треком, который сейчас рисуется в футере
     if (id === item.id && type === item.type) {
       favBtn.classList.toggle("active", newStatus);
     }
-  });
+  };
 
+  window.addEventListener("favoriteUpdate", handleFavoriteUpdate);
+
+  // Безопасное получение имени репозитория для TypeScript
+  const isGithub = window.location.hostname.includes("github.io");
+  const pathParts = window.location.pathname.split('/');
+  const repoName = isGithub && pathParts.length > 1 ? `/${pathParts[1]}` : "";
+
+  // Формируем путь к обложке артиста
   const trackImg =
     item.type === "track"
       ? `${repoName}/images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
       : placeholderPath;
 
-  // 2. Логика автора и обложки
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
 
-  // 3. Собираем основной контейнер (footer__wrapper)
   const infoTrack = el(
     "div.footer__wrapper",
     {
       onclick: () => player.playTrack(index, currentList),
     },
     [
-      // Обложка
-
-     el("img.footer__wrapper-img", {
+      el("img.footer__wrapper-img", {
         src: trackImg,
         onerror: (e: Event) => {
           const img = e.target as HTMLImageElement;
-          img.onerror = null;
-          img.src = defaultIconPath; 
+          img.onerror = null; // Стоп бесконечного цикла 404
+          img.src = defaultIconPath;
         },
       }),
-      // Инфо-блок
       el("div.footer__info", [
         el("div.footer__top", [
           el("p.footer__top-title", item.title),
@@ -77,8 +77,10 @@ export function createTrack(
       ]),
     ],
   );
+
   infoTrack.onunmount = () => {
     window.removeEventListener("favoriteUpdate", handleFavoriteUpdate);
   };
+
   return infoTrack;
 }
