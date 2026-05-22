@@ -82,7 +82,7 @@ export function createRow(
         el("div.track-wrapper", [
           el("img.track-img", {
             src: trackImg,
-            alt: "Постер музыкального трека",
+            alt: "Постер трека",
             onerror: (e: Event) => {
               const img = e.target as HTMLImageElement;
               img.onerror = null;
