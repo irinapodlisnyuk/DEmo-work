@@ -15,7 +15,6 @@ export function btnControls() {
     }
   };
 
-  // 2. Обработчик Play/Pause (исправленный ID и логика)
   playPauseBtn?.addEventListener("click", () => {
     player.togglePlay();
     updateIcon();
@@ -32,7 +31,7 @@ export function btnControls() {
     updateIcon();
   });
 
-  // 4. Единый цикл обновлений (ускорен до 200мс для плавности полоски)
+  // 4. Единый цикл обновлений 
   setInterval(() => {
     const progress = player.getProgress();
     const timeEl = document.getElementById("timer");
@@ -76,32 +75,30 @@ export function btnControls() {
 
   const progressContainer = document.querySelector(
     ".footer__controlsProgress",
-  ) as HTMLElement; // ID всего серого фона полоски
+  ) as HTMLElement;
 
   progressContainer?.addEventListener("click", (e) => {
-    const width = progressContainer.clientWidth; // Общая ширина полоски
-    const clickX = e.offsetX; // Где именно кликнули (в пикселях)
-    // Вычисляем процент (от 0 до 1)
+    const width = progressContainer.clientWidth; 
+    const clickX = e.offsetX; 
+
     const percent = clickX / width;
-    // Вызываем метод перемотки в сервисе
+   
     player.seekToPercent(percent);
   });
 
   document.addEventListener("keydown", (e) => {
-  // Проверяем, не пишет ли пользователь в этот момент в поиске или чате
   if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
 
   switch (e.code) {
     case "ArrowRight":
-      player.skip(10); // Вперед на 10 секунд
+      player.skip(10); 
       break;
     case "ArrowLeft":
-      player.skip(-10); // Назад на 10 секунд
+      player.skip(-10); 
       break;
     case "Space":
-      e.preventDefault(); // Чтобы страница не прыгала вниз
+      e.preventDefault(); 
       player.togglePlay();
-      // Не забудьте вызвать updateIcon(), если она у вас в этой области видимости
      updateIcon();
      
       break;

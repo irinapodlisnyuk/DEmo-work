@@ -41,8 +41,8 @@ export function createTrack(
 
   const trackImg =
     item.type === "track"
-      ? `../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
-      : "../../images/img-audio/placeholder.png";
+      ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : "./images/img-audio/placeholder.png";
 
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
 
@@ -57,7 +57,7 @@ export function createTrack(
         onerror: (e: Event) => {
           const img = e.target as HTMLImageElement;
           img.onerror = null; // Стоп бесконечного цикла 404
-          img.src = "../../images/img-audio/track-icon.png";
+          img.src = "./images/img-audio/track-icon.png";
         },
       }),
       el("div.footer__info", [
