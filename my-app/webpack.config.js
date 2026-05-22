@@ -12,8 +12,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].bundle.js",
-     publicPath: "/VibeCast-Studio/",
+    filename: "[name].[contenthash].bundle.js",
+    publicPath: "/VibeCast-Studio/",
     // publicPath: "./",
     clean: true,
   },
@@ -79,7 +79,7 @@ module.exports = {
       filename: "main.html",
       chunks: ["main"], // Подключает только main.bundle.js
     }),
-    
+
     new FileManagerPlugin({
       events: {
         onEnd: {
