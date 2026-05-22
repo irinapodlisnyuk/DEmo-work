@@ -4,7 +4,7 @@ import { AudioItem } from "../tableList/typesTracks";
 import spritePath from "../../images/sprite.svg";
 import { getFavorites } from "../tableList/favoritesTrack";
 import { toggleFavorite } from "../tableList/toggleFavorite";
-import defaultIconPath from "../../images/img-audio/placeholder.png";
+import defaultIconPath from "../images/img-audio/placeholder.png";
 
 export function createTrack(
   item: AudioItem,
