@@ -7,7 +7,6 @@ import { player } from "../player/player";
 import { getRelativeTime } from "../../utils/formatDate";
 import { setupTooltip, tooltipContent } from "../tippy";
 
-// Импортируем ассеты (3 уровня вверх из ts/tableList)
 import spritePath from "../../../images/sprite.svg";
 import defaultIconPath from "../../../images/img-audio/track-icon.png";
 import placeholderPath from "../../../images/img-audio/placeholder.png";
@@ -61,14 +60,9 @@ export function createRow(
   const dateAdded = item.createdAt ? getRelativeTime(item.createdAt) : "Неизвестно";
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
   
-  // Безопасное получение имени репозитория для TypeScript
-  const isGithub = window.location.hostname.includes("github.io");
-  const pathParts = window.location.pathname.split('/');
-  const repoName = isGithub && pathParts.length > 1 ? `/${pathParts[1]}` : "";
-
   const trackImg =
     item.type === "track"
-      ? `${repoName}/images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      ? `./images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
       : placeholderPath;
 
   const moreBtn = el("button.tippy__btn", { onclick: (e: Event) => e.stopPropagation() }, [pointsIcon]);
@@ -89,8 +83,8 @@ export function createRow(
             src: trackImg,
             onerror: (e: Event) => {
               const img = e.target as HTMLImageElement;
-              img.onerror = null; // Стоп бесконечного цикла 404
-              img.src = defaultIconPath;
+              img.onerror = null; // Полноценный стоп бесконечного цикла 404
+              img.src = defaultIconPath; // Этот путь собран Webpack/Vite, он 100% сработает
             },
           }),
           el("div.track-text", [
