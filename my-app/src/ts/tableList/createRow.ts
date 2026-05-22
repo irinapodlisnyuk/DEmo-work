@@ -26,23 +26,18 @@ export function createRow(
   );
 
   const favorites = getFavorites();
-
   const itemKey: string = `${item.type}-${item.id}`;
   const isFavorite = favorites.includes(itemKey);
 
   const favBtn = el(
     "button",
     {
-      // Формируем строку классов заранее: либо "fav-btn active", либо просто "fav-btn"
       className: isFavorite ? "fav-btn active" : "fav-btn",
       onclick: async (e: Event) => {
         e.stopPropagation();
-
         const wasFavorite = favBtn.classList.contains("active");
-        // Отправляем запрос на сервер
         const success = await toggleFavorite(item.id, item.type, wasFavorite);
         if (success) {
-          // classList.toggle работает с ОДНИМ словом, поэтому тут ошибки не будет
           favBtn.classList.toggle("active");
         }
       },
@@ -50,29 +45,36 @@ export function createRow(
     [heartIcon],
   );
 
-  // Получаем дату из объекта (или ставим текущую, если её нет в API)
-  const dateAdded = item.createdAt
-    ? getRelativeTime(item.createdAt)
-    : "Неизвестно";
+  // Синхронизация лайков с футером (чтобы не ломались при клике в плеере)
+  const handleFavoriteUpdate = (e: any) => {
+    const { id, type, isFavorite: newStatus } = e.detail;
+    if (id === item.id && type === item.type) {
+      favBtn.classList.toggle("active", newStatus);
+    }
+  };
+  window.addEventListener("favoriteUpdate", handleFavoriteUpdate);
 
+  const dateAdded = item.createdAt ? getRelativeTime(item.createdAt) : "Неизвестно";
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
 
+  // Автоматически определяем имя вашего репозитория на GitHub Pages
+  const isGithub = window.location.hostname.includes("github.io");
+  const pathParts = window.location.pathname.split('/');
+  const repoName = isGithub && pathParts.length > 1 ? `/${pathParts[1]}` : "";
+
+  // Формируем корректный корневой путь к картинкам
   const trackImg =
     item.type === "track"
-      ? `../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
-      : "../../images/img-audio/placeholder.png";
+      ? `${repoName}/images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : `${repoName}/images/img-audio/placeholder.png`;
 
   const moreBtn = el(
     "button.tippy__btn",
-    {
-      onclick: (e: Event) => e.stopPropagation(), // Чтобы не запускался плеер
-    },
+    { onclick: (e: Event) => e.stopPropagation() },
     [pointsIcon],
   );
-    // Генерируем контент
-  const tooltipCont = tooltipContent (item.title, author);
-
-  //  Инициализируем тултип через наш модуль
+  
+  const tooltipCont = tooltipContent(item.title, author);
   setupTooltip(moreBtn, tooltipCont);
 
   const row = el(
@@ -89,12 +91,12 @@ export function createRow(
         el("div.track-wrapper", [
           el("img.track-img", {
             src: trackImg,
-          onerror: (e: Event) => {
-            const img = e.target as HTMLImageElement;
-            img.onerror = null;
-            img.src = "../../images/img-audio/track-icon.png",
-          },
-        }),
+            onerror: (e: Event) => {
+              const img = e.target as HTMLImageElement;
+              img.onerror = null; // ИСПРАВЛЕНО: Прерывает бесконечный цикл 404
+              img.src = `${repoName}/images/img-audio/track-icon.png`; // ИСПРАВЛЕНО: Синтаксис и путь
+            },
+          }),
           el("div.track-text", [
             el("div.track-title", item.title),
             el("div.track-author", author),
@@ -104,10 +106,17 @@ export function createRow(
       el("td.track-row__album", item.type === "track" ? item.artist : "-"),
       el("td.track-row__date", dateAdded),
       el("td.track-row__heart", favBtn),
-
       el("td.track-row__actions", formatTime(item.duration)),
       el("td.track-row__more", moreBtn),
     ],
   );
+
+  // Очищаем глобальный слушатель при удалении строки, чтобы не было утечек памяти
+  row.onunmount = () => {
+    window.removeEventListener("favoriteUpdate", handleFavoriteUpdate);
+  };
+
+  return row;
+}
   return row;
 }
