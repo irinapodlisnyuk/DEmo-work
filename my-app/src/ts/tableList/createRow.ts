@@ -89,10 +89,11 @@ export function createRow(
         el("div.track-wrapper", [
           el("img.track-img", {
             src: trackImg,
-            onerror: (e: Event) =>
-              ((e.target as HTMLImageElement).src =
-                "../../images/img-audio/track-icon.png"),
-          }),
+          onerror: (e: Event) => {
+            const img = e.target as HTMLImageElement;
+            img.onerror = null;
+            img.src = "../../images/img-audio/placeholder.png";
+          },
           el("div.track-text", [
             el("div.track-title", item.title),
             el("div.track-author", author),
