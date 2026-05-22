@@ -8,7 +8,9 @@ import { player } from "../player/player";
 import { getRelativeTime } from "../../utils/formatDate";
 import { setupTooltip, tooltipContent } from "../tippy";
 
-import defaultIconPath from "../../images/img-audio/placeholder.png";
+import spritePath from "../../../images/sprite.svg";
+import defaultIconPath from "../../../images/img-audio/track-icon.png";
+import placeholderPath from "../../../images/img-audio/placeholder.png";
 
 export function createRow(
   item: AudioItem,
@@ -58,10 +60,15 @@ export function createRow(
     : "Неизвестно";
 
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
+  
+  const isGithub = window.location.hostname.includes("github.io");
+  const repoName = isGithub ? `/${window.location.pathname.split('/')[1]}` : "";
+  
   const trackImg =
     item.type === "track"
-      ? `../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
-      : "../../images/img-audio/placeholder.png";
+      ? `${repoName}/images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : placeholderPath;
+
 
   const moreBtn = el(
     "button.tippy__btn",
