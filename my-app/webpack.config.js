@@ -13,8 +13,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].[contenthash].bundle.js",
-    publicPath: "/VibeCast-Studio/",
-    // publicPath: "./",
+    // publicPath: "/VibeCast-Studio/",
+    publicPath: "auto",
     clean: true,
   },
 
