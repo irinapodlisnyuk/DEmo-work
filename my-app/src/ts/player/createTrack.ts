@@ -4,7 +4,9 @@ import { AudioItem } from "../tableList/typesTracks";
 import spritePath from "../../images/sprite.svg";
 import { getFavorites } from "../tableList/favoritesTrack";
 import { toggleFavorite } from "../tableList/toggleFavorite";
-import defaultIconPath from "../images/img-audio/placeholder.png";
+import spritePath from "../../../images/sprite.svg";
+import defaultIconPath from "../../../images/img-audio/track-icon.png";
+import placeholderPath from "../../../images/img-audio/placeholder.png";
 
 export function createTrack(
   item: AudioItem,
@@ -42,8 +44,8 @@ export function createTrack(
 
   const trackImg =
     item.type === "track"
-      ? `../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
-      : "../../images/img-audio/placeholder.png";
+      ? `${repoName}/images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : placeholderPath;
 
   // 2. Логика автора и обложки
   const author = (item.type === "track" ? item.artist : item.host) || "Unknown";
@@ -57,13 +59,12 @@ export function createTrack(
     [
       // Обложка
 
-      el("img.footer__wrapper-img", {
+     el("img.footer__wrapper-img", {
         src: trackImg,
         onerror: (e: Event) => {
           const img = e.target as HTMLImageElement;
-          // Предотвращаем бесконечный цикл, если даже заглушка пропадет
-          img.onerror = null; 
-          img.src = defaultIconPath;
+          img.onerror = null;
+          img.src = defaultIconPath; 
         },
       }),
       // Инфо-блок
@@ -76,6 +77,8 @@ export function createTrack(
       ]),
     ],
   );
-
+  infoTrack.onunmount = () => {
+    window.removeEventListener("favoriteUpdate", handleFavoriteUpdate);
+  };
   return infoTrack;
 }
