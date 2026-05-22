@@ -4,6 +4,7 @@ import { AudioItem } from "../tableList/typesTracks";
 import spritePath from "../../images/sprite.svg";
 import { getFavorites } from "../tableList/favoritesTrack";
 import { toggleFavorite } from "../tableList/toggleFavorite";
+import defaultIconPath from "../../images/img-audio/placeholder.png";
 
 export function createTrack(
   item: AudioItem,
@@ -58,15 +59,18 @@ export function createTrack(
 
       el("img.footer__wrapper-img", {
         src: trackImg,
-        onerror: (e: Event) =>
-          ((e.target as HTMLImageElement).src =
-            "../../images/img-audio/track-icon.png"),
+        onerror: (e: Event) => {
+          const img = e.target as HTMLImageElement;
+          // Предотвращаем бесконечный цикл, если даже заглушка пропадет
+          img.onerror = null; 
+          img.src = defaultIconPath;
+        },
       }),
       // Инфо-блок
       el("div.footer__info", [
         el("div.footer__top", [
           el("p.footer__top-title", item.title),
-          favBtn, // Вставляем SVG напрямую
+          favBtn,
         ]),
         el("span.footer__info-text", author),
       ]),
