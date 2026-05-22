@@ -59,8 +59,8 @@ export function createRow(
 
   const trackImg =
     item.type === "track"
-      ? `../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
-      : "../../images/img-audio/placeholder.png";
+      ? `../../../images/img-audio/${item.artist.toLowerCase().replace(/\s+/g, "-")}.png`
+      : "../../../images/img-audio/placeholder.png";
 
   const moreBtn = el(
     "button.tippy__btn",
@@ -91,7 +91,7 @@ export function createRow(
             src: trackImg,
             onerror: (e: Event) =>
               ((e.target as HTMLImageElement).src =
-                "../../images/img-audio/track-icon.png"),
+                "../../../images/img-audio/track-icon.png"),
           }),
           el("div.track-text", [
             el("div.track-title", item.title),
