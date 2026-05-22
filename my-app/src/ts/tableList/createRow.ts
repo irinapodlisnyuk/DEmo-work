@@ -26,23 +26,18 @@ export function createRow(
   );
 
   const favorites = getFavorites();
-
   const itemKey: string = `${item.type}-${item.id}`;
   const isFavorite = favorites.includes(itemKey);
 
   const favBtn = el(
     "button",
     {
-      // Формируем строку классов заранее: либо "fav-btn active", либо просто "fav-btn"
       className: isFavorite ? "fav-btn active" : "fav-btn",
       onclick: async (e: Event) => {
         e.stopPropagation();
-
         const wasFavorite = favBtn.classList.contains("active");
-        // Отправляем запрос на сервер
         const success = await toggleFavorite(item.id, item.type, wasFavorite);
         if (success) {
-          // classList.toggle работает с ОДНИМ словом, поэтому тут ошибки не будет
           favBtn.classList.toggle("active");
         }
       },
@@ -50,7 +45,6 @@ export function createRow(
     [heartIcon],
   );
 
-  // Получаем дату из объекта (или ставим текущую, если её нет в API)
   const dateAdded = item.createdAt
     ? getRelativeTime(item.createdAt)
     : "Неизвестно";
@@ -65,14 +59,13 @@ export function createRow(
   const moreBtn = el(
     "button.tippy__btn",
     {
-      onclick: (e: Event) => e.stopPropagation(), // Чтобы не запускался плеер
+      onclick: (e: Event) => e.stopPropagation(),
     },
     [pointsIcon],
   );
-    // Генерируем контент
-  const tooltipCont = tooltipContent (item.title, author);
 
-  //  Инициализируем тултип через наш модуль
+  // Исправлено форматирование: убран лишний пробел перед скобкой
+  const tooltipCont = tooltipContent(item.title, author);
   setupTooltip(moreBtn, tooltipCont);
 
   const row = el(
@@ -89,9 +82,11 @@ export function createRow(
         el("div.track-wrapper", [
           el("img.track-img", {
             src: trackImg,
-            onerror: (e: Event) =>
-              ((e.target as HTMLImageElement).src =
-                "./images/img-audio/track-icon.png"),
+            onerror: (e: Event) => {
+              const img = e.target as HTMLImageElement;
+              img.onerror = null; // Полноценно останавливает бесконечный цикл 404
+              img.src = "./images/img-audio/track-icon.png";
+            },
           }),
           el("div.track-text", [
             el("div.track-title", item.title),
@@ -102,10 +97,10 @@ export function createRow(
       el("td.track-row__album", item.type === "track" ? item.artist : "-"),
       el("td.track-row__date", dateAdded),
       el("td.track-row__heart", favBtn),
-
       el("td.track-row__actions", formatTime(item.duration)),
       el("td.track-row__more", moreBtn),
     ],
   );
+
   return row;
 }
