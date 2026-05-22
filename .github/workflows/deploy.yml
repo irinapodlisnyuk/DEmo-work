@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages V2
 
 on:
   push:
-    branches: [main] # Измените на master, если ваша ветка называется master
+    branches: [main]
 
 permissions:
   contents: read
@@ -33,13 +33,13 @@ jobs:
       - name: Install dependencies and Build
         run: |
           cd my-app
-          npm ci
+          npm install
           npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: /my-app/dist
+          path: ./my-app/dist
 
       - name: Deploy to GitHub Pages
         id: deployment
