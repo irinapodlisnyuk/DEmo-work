@@ -1,19 +1,20 @@
-
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const FileManagerPlugin = require("filemanager-webpack-plugin");
 
 module.exports = {
   mode: "production",
   entry: {
     main: "./src/ts/main.ts", // Скрипты для музыки Скрипты для входа
     index: "./src/ts-index/index.ts",
-   // Вход
+    // Вход
   },
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].bundle.js",
-    publicPath: "/VibeCast-Studio/",
+     publicPath: "/VibeCast-Studio/",
+    // publicPath: "./",
     clean: true,
   },
 
@@ -25,7 +26,7 @@ module.exports = {
         options: {
           sources: {
             list: [
-              "...", 
+              "...",
               {
                 tag: "use",
                 attribute: "href",
@@ -36,12 +37,8 @@ module.exports = {
         },
       },
       {
-        test: /\.(c|sc|sa)ss$/i, 
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          "sass-loader", 
-        ],
+        test: /\.(c|sc|sa)ss$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
         test: /\.(ttf|otf|woff2?)/i,
@@ -51,7 +48,7 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: "asset/resource",
         generator: {
-          filename: "assets/images/[name][ext]", 
+          filename: "assets/images/[name][ext]",
         },
       },
       {
@@ -66,7 +63,6 @@ module.exports = {
   },
 
   plugins: [
-
     new MiniCssExtractPlugin({
       filename: "css/[name].[contenthash].css", // Создаст отдельные main.css и second.css
     }),
@@ -83,7 +79,21 @@ module.exports = {
       filename: "main.html",
       chunks: ["main"], // Подключает только main.bundle.js
     }),
+    
+    new FileManagerPlugin({
+      events: {
+        onEnd: {
+          copy: [
+            {
+              source: path.resolve(__dirname, "src/images/img-audio"),
+              destination: path.resolve(__dirname, "dist/assets/images"),
+            },
+          ],
+        },
+      },
+    }),
   ],
+
   devServer: {
     historyApiFallback: true, // Позволяет корректно работать переходам
     hot: true,
