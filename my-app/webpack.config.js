@@ -14,7 +14,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].[contenthash].bundle.js",
     // publicPath: "/VibeCast-Studio/",
-       publicPath: process.env.BUILD_TARGET === "github" ? "/VibeCast-Studio/" : "/",
+    publicPath: "auto",
     clean: true,
   },
 
