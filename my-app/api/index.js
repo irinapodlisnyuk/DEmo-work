@@ -2,17 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const routes = require("./routes/routes.js");
-const { execSync } = require("child_process"); // 1. Импортируем модуль для запуска команд
-
-// 2. Заставляем сервер принудительно собрать фронтенд прямо на Vercel
-try {
-  console.log("=== Vercel Deployment: Running Webpack Build ===");
-  // Запускаем сборку внутри папки my-app
-  execSync("npx webpack --mode production", { stdio: "inherit" });
-  console.log("=== Webpack Build Completed Successfully ===");
-} catch (error) {
-  console.error("Webpack build failed during runtime:", error);
-}
 
 const app = express();
 

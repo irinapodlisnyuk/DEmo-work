@@ -3,13 +3,7 @@
   "builds": [
     {
       "src": "api/index.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "dist/**",
-          "src/audio/**"
-        ]
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
