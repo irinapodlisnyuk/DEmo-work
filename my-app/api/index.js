@@ -8,10 +8,11 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Заменяет bodyParser
 
-// Использовать webpack-dev-middleware ТОЛЬКО локально, чтобы сервер на Render не падал
+// Использовать webpack-dev-middleware ТОЛЬКО локально
 if (process.env.NODE_ENV !== "production") {
   const webpack = require("webpack");
-  const config = require("./webpack.config.js");
+  // Выходим из папки api в корень к конфигу webpack
+  const config = require("../webpack.config.js");
   const compiler = webpack(config);
   
   app.use(
@@ -21,16 +22,9 @@ if (process.env.NODE_ENV !== "production") {
   );
 }
 
-
 app.use("/api", routes);
 
-// Раздача статических файлов (фронтенд после npm run build теперь лежит в dist)
-app.use(express.static(path.join(__dirname, "dist")));
-app.use("/audio", express.static(path.join(__dirname, "src/audio")));
-
-// const PORT = process.env.PORT || 8000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
+app.use(express.static(path.join(__dirname, "../dist")));
+app.use("/audio", express.static(path.join(__dirname, "../src/audio")));
 
 module.exports = app;

@@ -4,7 +4,9 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
+      "config": {
+        "distDir": "dist"
+      }
     },
     {
       "src": "api/index.js",
@@ -18,7 +20,7 @@
     },
     {
       "src": "/audio/(.*)",
-      "dest": "src/audio/$1"
+      "dest": "api/index.js"
     },
     {
       "src": "/(.*)",
