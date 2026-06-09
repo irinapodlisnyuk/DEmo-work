@@ -18,9 +18,9 @@
     "audio sprite",
     "audiosprite"
   ],
-  "scripts": {
+    "scripts": {
     "start": "node api/index.js",
-    "build": "webpack",
+    "build": "webpack --mode production",
     "watch": "webpack --watch",
     "dev": "node api/index.js",
     "test": "jest"
