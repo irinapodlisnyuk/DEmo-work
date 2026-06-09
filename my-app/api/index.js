@@ -28,7 +28,9 @@ app.use("/api", routes);
 app.use(express.static(path.join(__dirname, "dist")));
 app.use("/audio", express.static(path.join(__dirname, "src/audio")));
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// const PORT = process.env.PORT || 8000;
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
+
+module.exports = app;
