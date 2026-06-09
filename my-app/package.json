@@ -19,10 +19,10 @@
     "audiosprite"
   ],
   "scripts": {
-    "start": "node server.js",
-    "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 webpack",
+    "start": "node api/index.js",
+    "build": "webpack",
     "watch": "webpack --watch",
-    "dev": "node server.js",
+    "dev": "node api/index.js",
     "test": "jest"
   },
   "dependencies": {
